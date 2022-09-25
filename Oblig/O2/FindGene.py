@@ -1,14 +1,13 @@
-#   O2: Liang 5.6extra
-#   generate random DNA sequence : https://molbiotools.com/randomsequencegenerator.php
+# O2: Liang 5.6extra
+# generate random DNA sequence : https://molbiotools.com/randomsequencegenerator.php
 
-# print("Prerequisite: gene should have a terminating codone(TAG, TAA, TGA)")
-#print("Enter a genome string", end= ": ")
+# Gene should have a terminating codone(TAG, TAA, TGA)
 genome = input("Enter a genome string").upper()
-#   some sequences for testing without typing:
-#   genome = "TTATGTTTTAAGGATGGGGCGTTAGTT" 
-#   genome = "TGTGTGTATAT"
-#   genome = "TCCACGATTGAATGGTTGTCTTTCCC"
-#   genome = "AATGGTGTGACATGTAAACACATTATGXXX"
+# some sequences for testing without typing:
+# genome = "TTATGTTTTAAGGATGGGGCGTTAGTT" 
+# genome = "TGTGTGTATAT"
+# genome = "TCCACGATTGAATGGTTGTCTTTCCC"
+# genome = "AATGGTGTGACATGTAAACACATTATGXXX"
 
 pos_ATG = genome.find("ATG")
 sequence = "" # will contain all substrings of the gene
