@@ -41,8 +41,19 @@ def drawBoard():
 
 #not yet implemented, will draw X or O on board using turtle
 def drawPlayer(player):
+    t = turtle.Turtle()
+    t.speed(10)
     # TODO:turtle.addshape()
-    return True
+    if(player == "X"):
+        turtle.heading(45)
+        turtle.forward(100)
+        turtle.penup()
+        turtle.goto(150,-50)
+        turtle.pendown()
+        turtle.left(90)
+        turtle.forward(100)
+    else: #player is "O"
+        t.circle(20)
 
 def gameState(currentPlayer) : #returns game over condition, 1 = a player has won, 2 = it is a draw, 3 = no winner yet
     #check if winning conditions
@@ -91,8 +102,7 @@ def gameLoop():
         row = int(input("Enter row(0,1,2): "))
         col = int(input("Enter column(0,1,2): "))
 
-        #row = random.randint(0,8)
-        #col = random.randint(0,8)
+        drawPlayer(player[currentPlayer])
 
         if(isLegalMove(row,col)):
             #TODO: drawPlayer(currentPlayer)
