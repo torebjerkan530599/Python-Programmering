@@ -1,6 +1,4 @@
-import imp
 from Account import Account
-from Account import Transaction
 
 account1 = Account(1, 1000, 50000, 7)
 print(account1)
