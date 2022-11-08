@@ -35,9 +35,10 @@ class ProcessChoice:
         self.__btLeft.bind("<Button-1>", self.moveLeft)
         self.__btRight.bind("<Button-1>", self.moveRight)
 
-        self.__btLeft.grid(row = 3, column = 1)
-        self.__btRight.grid(row = 3, column = 2)
-
+        #self.__btLeft.grid(row = 3, column = 1)
+        #self.__btRight.grid(row = 3, column = 2)
+        self.__btLeft.pack(side=LEFT)
+        self.__btRight.pack(side=RIGHT)
         self._dx = 3 # change in x from current x
         self.__canvas.create_text(100,50,text = "Welcome", font = "Times 10 bold underline", tags = "message")
 
