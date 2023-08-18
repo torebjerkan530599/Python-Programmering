@@ -51,6 +51,7 @@ class Clock:
         d = datetime(self.__year, self.__month, self.__day, self.__hour,
                      self.__min, self.__sec)
         s = '{:%Y-%m-%d %H:%M:%S}'.format(d)
+        return (f'{self.__year:04d}-{self.__month:02d}-{self.__day:02d} {self.__hour:02d}:{self.__min:02}:{self.__sec:02}')
         return '{:%Y-%m-%d %H:%M:%S}'.format(d)
 
     def set_clock(self, year, month, day, hour, min, sec):
