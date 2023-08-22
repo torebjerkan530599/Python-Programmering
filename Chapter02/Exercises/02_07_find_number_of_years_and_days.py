@@ -8,6 +8,12 @@
 #
 #
 #
+import time
+
+currentTime = time.time()
+print("currentTime:", currentTime)
+totalSeconds = int(currentTime)
+print("totalSeconds", totalSeconds)
 
 minutes = int(input("Enter the number of minutes: "));
 

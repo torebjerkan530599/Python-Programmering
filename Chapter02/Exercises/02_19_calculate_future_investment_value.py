@@ -11,7 +11,7 @@ years = int(input("Enter number of years: "))
 
 numberOfMonths = years * 12
 
-monthlyInterestRate = (annualInterest / numberOfMonths) / 100
+monthlyInterestRate = annualInterest / 1200
 
 futureInvestmentAmount = investmentAmount * (1 + monthlyInterestRate) ** numberOfMonths
 
