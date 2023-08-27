@@ -1,4 +1,4 @@
-dec = int(input("Enter a decimal number between 0 and 15: "))
+dec = int(input("Enter a decimal within range [0,15]: "))
 
 # logikk: hvis vi deler et tall på 2 vil vi få en rest på 1 eller 0.1
 
