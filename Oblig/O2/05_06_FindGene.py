@@ -2,8 +2,8 @@
 # generate random DNA sequence : https://molbiotools.com/randomsequencegenerator.php
 
 # Gene should have a terminating codone(TAG, TAA, TGA)
-genome = input("Enter a genome string").upper()
-# some sequences for testing without typing:
+genome = input("Enter a genome string: ").upper()
+# some sequences for testing
 # genome = "TTATGTTTTAAGGATGGGGCGTTAGTT" 
 # genome = "TGTGTGTATAT"
 # genome = "TCCACGATTGAATGGTTGTCTTTCCC"
