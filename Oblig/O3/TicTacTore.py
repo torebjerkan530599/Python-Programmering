@@ -1,67 +1,8 @@
 import turtle
-# import random #for testing purposes, so that I don't have to enter input every time I want to test
 
-player = ["X", "O"]
+player = ['|  X  ', '|  O  ']
 # a one dimensional matrix to hold the moves. -1 means not filled yet
 moves = [-1, -1, -1, -1, -1, -1, -1, -1, -1]
-
-
-def drawBoard():
-    # init turtle
-    # set screen
-    screen = turtle.Screen()
-    turtle.screensize(bg="yellow")
-    screen.setup(500,500)
-    turtle.hideturtle()
-    turtle.pensize(2)
-    turtle.color("black")
-    turtle.speed(10)
-    turtle.penup()
-
-    for i in range(-1, 3):
-        turtle.setx(-150)
-        turtle.sety(100 * i)
-        turtle.pendown()
-        turtle.forward(300)
-        turtle.penup()
-
-    # turtle.goto(-250, -100)
-    turtle.setheading(90)
-#
-    for i in range(-1, 3):
-        turtle.setx(100 * i - 50)
-        turtle.sety(-100)
-        turtle.pendown()
-        turtle.forward(300)
-        turtle.penup()
-        
-    return
-
-# not yet implemented, will draw X or O on board using turtle
-
-
-def drawPlayer(player, row, col):
-    turtle.setheading(0)
-    turtle.penup()
-  
-    if (player == "X"):
-        turtle.setpos(200,200)
-        turtle.setpos(-95-50 + col * 100, 195 - row * 100)
-        turtle.right(45)
-        turtle.pendown()
-        turtle.forward(125)
-        
-        turtle.penup()
-
-        turtle.right(90)
-        turtle.setpos(-5 -50 + col * 100, 195 - row * 100)
-        turtle.pendown()
-        turtle.forward(125)
-    else:  # player is "O"
-        turtle.setpos(-100 + col * 100, 105 - row * 100)
-        turtle.pendown()
-        turtle.circle(45)
-
 
 # returns game over condition, 1 = a player has won, 2 = it is a draw, 3 = no winner yet
 def gameState(currentPlayer):
@@ -113,24 +54,23 @@ def to1D(row, col):
 def gameLoop():
     currentPlayer = 0
     state = gameState(currentPlayer)
+    arr = [['|     ','|     ','|     |'],['|     ','|     ','|     |'],['|     ','|     ','|     |']]
     while (True):  # 0 == no winner yet
-        print("current player is " + player[currentPlayer])
-
+        print()
+        print("current player is " + (player[currentPlayer]).replace('|', '').strip() + "\n")
         row = int(input("Enter row(0,1,2): "))
         col = int(input("Enter column(0,1,2): "))
- 
-            
+        print()
+
         if (isLegalMove(row, col)):
-            drawPlayer(player[currentPlayer], row, col)
-            moves[to1D(row,col)] = currentPlayer
+            moves[to1D(row,col)] = currentPlayer # logic storage in 1D array
+            board = placeMove(player[currentPlayer], row, col, arr) # visual storage in 2D array
+            draw(board)
             
-                   
-            print("------------------")
-            temp = ""
-            for i in range(len(moves)):
-                temp += f'{moves[i]}' + " "
-                
-            print(temp)
+            # playerPlacement = ""
+            # for i in range(len(moves)):
+            #     temp += f'{moves[i]}' + " "                
+            #print(playerPlacement)
             
             state = gameState(currentPlayer)
 
@@ -141,13 +81,91 @@ def gameLoop():
             if (state == 2):
                 print("It is a draw! No winner!")
                 break
-            # if(x > 2 or x < 0): print() # test for valid input
-            currentPlayer = swapCurrentPlayer(currentPlayer)
+            
+            if(row > 2 or row < 0 or col > 2 or col < 0): 
+                print("Not valid input for row or column") # test for valid input
+            else:
+                currentPlayer = swapCurrentPlayer(currentPlayer)
         else:
             print("it is not a legal move! Square already occupied! Try again!")
             
         
+def placeMove(player, row, col, board):
+    
+    for i in range(3):
+        for j in range(3):
+            if i==row and j == col:
+                board[i][j] = player
+    return board
+
+def draw(board):
+    viz = ''
+    for i in range(3):
+        viz += '-------------------\n'
+        for j in range(3):   
+            viz += board[i][j]
+            if(board[i][j] == '|  X  ' or board[i][j] == '|  O  ') and j == 2:
+                viz += '|'
+        viz += '\n'
+    viz += '-------------------\n' 
+    print(viz)
+
+#drawBoard()
+
+#Drawcode for Turtle...just for fun
+def drawBoard():
+    # init turtle
+    # set screen
+    screen = turtle.Screen()
+    turtle.screensize(bg="yellow")
+    screen.setup(500,500)
+    turtle.hideturtle()
+    turtle.pensize(2)
+    turtle.color("black")
+    turtle.speed(10)
+    turtle.penup()
+
+    for i in range(-1, 3):
+        turtle.setx(-150)
+        turtle.sety(100 * i)
+        turtle.pendown()
+        turtle.forward(300)
+        turtle.penup()
+
+    # turtle.goto(-250, -100)
+    turtle.setheading(90)
+#
+    for i in range(-1, 3):
+        turtle.setx(100 * i - 50)
+        turtle.sety(-100)
+        turtle.pendown()
+        turtle.forward(300)
+        turtle.penup()
+        
+    return
+
+def drawPlayer(player, row, col):
+    turtle.setheading(0)
+    turtle.penup()
+  
+    if (player == "X"):
+        turtle.setpos(200,200)
+        turtle.setpos(-95-50 + col * 100, 195 - row * 100)
+        turtle.right(45)
+        turtle.pendown()
+        turtle.forward(125)
+        
+        turtle.penup()
+
+        turtle.right(90)
+        turtle.setpos(-5 -50 + col * 100, 195 - row * 100)
+        turtle.pendown()
+        turtle.forward(125)
+    else:  # player is "O"
+        turtle.setpos(-100 + col * 100, 105 - row * 100)
+        turtle.pendown()
+        turtle.circle(45)
 
 
-drawBoard()
+
 main()
