@@ -1,8 +1,9 @@
-import turtle
+import turtle # implemented turtle version as well just for fun. Look at the bottom of the assignment.
 
 player = ['|  X  ', '|  O  ']
-# a one dimensional matrix to hold the moves. -1 means not filled yet
-moves = [-1, -1, -1, -1, -1, -1, -1, -1, -1]
+
+# a one dimensional matrix to determine status. -1 means not filled yet
+moves = [-1, -1, -1, -1, -1, -1, -1, -1, -1] # 0 = X, 1 = O
 
 # returns game over condition, 1 = a player has won, 2 = it is a draw, 3 = no winner yet
 def gameState(currentPlayer):
@@ -14,7 +15,7 @@ def gameState(currentPlayer):
         # 3. horizontal
         (moves[6] == currentPlayer and moves[7] == currentPlayer and moves[8] == currentPlayer) or
         # 1. diagonal
-        (moves[0] == currentPlayer and moves[3] == currentPlayer and moves[6] == currentPlayer) or
+        (moves[0] == currentPlayer and moves[4] == currentPlayer and moves[8] == currentPlayer) or # celle [0,0] gir indeks 0, celle [1,1] gir indeks 4, celle [2,2] gir index 8
         # 1. anti-diagonal
         (moves[2] == currentPlayer and moves[4] == currentPlayer and moves[6] == currentPlayer) or
         # 1. vertical
@@ -38,7 +39,7 @@ def main():
     gameLoop()
 
 def swapCurrentPlayer(currentPlayer) -> int:
-        #currentPlayer = currentPlayer != currentPlayer
+        #currentPlayer ^= currentPlayer
         if(currentPlayer == 0):
             currentPlayer = 1
         else :
@@ -47,14 +48,14 @@ def swapCurrentPlayer(currentPlayer) -> int:
 
 
 def to1D(row, col):
-    index = row * 3 + col  # number of columns is 3
+    index = row * 3 + col
     return index
 
 
 def gameLoop():
     currentPlayer = 0
-    state = gameState(currentPlayer)
-    arr = [['|     ','|     ','|     |'],['|     ','|     ','|     |'],['|     ','|     ','|     |']]
+
+    graphicsArray = [['|     ','|     ','|     |'],['|     ','|     ','|     |'],['|     ','|     ','|     |']]
     while (True):  # 0 == no winner yet
         print()
         print("current player is " + (player[currentPlayer]).replace('|', '').strip() + "\n")
@@ -64,18 +65,18 @@ def gameLoop():
 
         if (isLegalMove(row, col)):
             moves[to1D(row,col)] = currentPlayer # logic storage in 1D array
-            board = placeMove(player[currentPlayer], row, col, arr) # visual storage in 2D array
+            board = placeMove(player[currentPlayer], row, col, graphicsArray) # visualize moves in a matrix
             draw(board)
             
-            # playerPlacement = ""
-            # for i in range(len(moves)):
-            #     temp += f'{moves[i]}' + " "                
-            #print(playerPlacement)
+
+
+
+
             
             state = gameState(currentPlayer)
 
             if (state == 1):
-                print("The winner is " + player[currentPlayer])
+                print("The winner is " + player[currentPlayer].replace('|', '').strip())
                 break
 
             if (state == 2):
@@ -110,8 +111,6 @@ def draw(board):
     viz += '-------------------\n' 
     print(viz)
 
-#drawBoard()
-
 #Drawcode for Turtle...just for fun
 def drawBoard():
     # init turtle
@@ -143,7 +142,6 @@ def drawBoard():
         turtle.penup()
         
     return
-
 def drawPlayer(player, row, col):
     turtle.setheading(0)
     turtle.penup()
@@ -165,7 +163,6 @@ def drawPlayer(player, row, col):
         turtle.setpos(-100 + col * 100, 105 - row * 100)
         turtle.pendown()
         turtle.circle(45)
-
-
+#drawBoard()
 
 main()
