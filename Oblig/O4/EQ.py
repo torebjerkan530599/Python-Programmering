@@ -11,47 +11,18 @@ class EQ:
 
     def set(self, i, j):
         self.__queens[i] = j  # denote the position of the queen in the row **
-        self.__board[i][j] = 'X'
+        self.__board[i][j] = 'Q' # 'Q' for Queen
 
-    # def checkQueens(self, arr):
-    #     queen_count = 0
-    #     for i in range(len(arr)):
-    #         for j in range(len(arr[i])):
-    #             print(arr[i][j], end = " ")
-    #             if(arr[i][j] == 'X'):
-    #                 queen_count += 1
-    #                 if queen_count == 2:
-    #                     return False
-    #         print()
-
-    def isSolved(self) -> bool:
-        # check for more than one queen in rows and columns
-
-        # might not be neccessary to check horizontally **
-        for row in range(0, self.__BOARD_SIZE):
-            # num_queens_horizontal = 0 #reset count for each column
-            num_queens_vertical = 0  # reset count for each row
-            for col in range(0, self.__BOARD_SIZE):
-                # if(board[row][col] == 'X'):
-                #     num_queens_horizontal += 1
-                #     if num_queens_horizontal == 2:
-                #         return False
-                if (self.__board[col][row] == 'X'):
-                    num_queens_vertical += 1
-                    if num_queens_vertical == 2:
-                        return False
-
+    def checkDiagonals(self):
         ans = [[] for i in range(self.__BOARD_SIZE + self.__BOARD_SIZE - 1)]
-
+        
         for i in range(self.__BOARD_SIZE):
             for j in range(self.__BOARD_SIZE):
-                # Build rows of diagonals
+                # Build rows representing diagonal of the board
                 ans[i + j].append(self.__board[j][i])
             print()
 
-        # check for more than one queen
-
-        # queen_count = 0
+        # check for more than one queen in each row
         for i in range(len(ans)):
             for j in range(len(ans[i])):
                 print(ans[i][j], end=" ")
@@ -61,25 +32,27 @@ class EQ:
                 #         return False
             print()
 
-        ans2 = [[] for i in range(self.__BOARD_SIZE + self.__BOARD_SIZE - 1)]
+    def isSolved(self) -> bool:
+        # check for more than one queen in rows and columns
+        # might not be neccessary to check horizontally, assignment says 'Place one Queen pr. row'
+        for row in range(0, self.__BOARD_SIZE):
+            # num_queens_horizontal = 0 #reset count for each column
+            num_queens_vertical = 0  # reset count for each row
+            for col in range(0, self.__BOARD_SIZE):
+                # if(board[row][col] == 'X'):
+                #     num_queens_horizontal += 1
+                #     if num_queens_horizontal == 2:
+                #         return False
+                if (self.__board[col][row] == 'Q'):
+                    num_queens_vertical += 1
+                    if num_queens_vertical == 2:
+                        return False
+
+        
+
+        self.checkDiagonals()
         self.__board.reverse()
-        # print("\nreversed!")
-
-        for i in range(self.__BOARD_SIZE):
-            for j in range(self.__BOARD_SIZE):
-                # Build rows of diagonals
-                ans2[i + j].append(self.__board[j][i])
-            print()
-
-        # queen_count = 0
-        for i in range(len(ans2)):
-           for j in range(len(ans2[i])):
-            print(ans2[i][j], end=" ")
-            #    if(ans[i][j] == 'X'):
-            #        queen_count += 1
-            #        if queen_count == 2:
-            #            return False
-           print()
+        self.checkDiagonals()
 
          # check for more than one queen diagonal from right to left
 
@@ -99,7 +72,6 @@ class EQ:
         return True
 
     def printBoard(self):
-        self.__board.reverse()
         for row in range(0, 8):
             print()
             for col in range(0, 8):

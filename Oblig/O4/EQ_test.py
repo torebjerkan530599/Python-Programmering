@@ -21,10 +21,8 @@ def main():
 
     board1.set(7, 5)
 
+    board1.printBoard()
     print("\n\nIs board1 a correct eight queen placement?",
 
         board1.isSolved())
-    
-    board1.printBoard()
-    
 main()
