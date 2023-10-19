@@ -26,22 +26,22 @@ def main():
 
         board1.isSolved())
     
-    # board1.printBoard() #NB reveresed board
+    #board1.printBoard()
     
     # board2 = EQ([0, 2, 7, 5, 2, 6, 1, 3]) # incorrect placement
-    # board2 = EQ([0, 4, 7, 5, 2, 6, 1, 3]) # correct placement
+    board2 = EQ([0, 4, 7, 5, 2, 6, 1, 3]) # correct placement
 
-    # if board2.isSolved():
+    if board2.isSolved():
 
-    #     print("Eight queens are placed correctly in board2")
+        print("Eight queens are placed correctly in board2")
 
-    #     board2.printBoard()
+        board2.printBoard()
 
-    # else:
+    else:
 
-    #     print("Eight queens are placed incorrectly in board2")
+        print("Eight queens are placed incorrectly in board2")
         
-    #     board2.printBoard()
+        board2.printBoard()
     
     # print()
     # for i in range(8):
