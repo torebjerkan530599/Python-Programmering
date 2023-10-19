@@ -3,73 +3,69 @@ class EQ:
     def __init__(self):
         self.__BOARD_SIZE = 8
         self.__queens = 8 * [-1]
-        self.__board = [['*' for i in range(8)]
-                        for j in range(8)]  # draw empty board
+        self.__board = [['*' for i in range(self.__BOARD_SIZE)]
+                        for j in range(self.__BOARD_SIZE)]  # draw empty board
+
+    # def __init__(self, queens=8 * [-1]):
+    #     self.__BOARD_SIZE = 8
+    #     self.__queens = queens
+    #     self.__board = [['*' for i in range(self.__BOARD_SIZE)]
+    #                     for j in range(self.__BOARD_SIZE)]  # draw empty board
+
+    #     counter = 0
+    #     for i in self.__queens:
+    #         self.__board[counter][i] = 'Q'
+    #         counter += 1
 
     def get(self, i):
         return self.__queens[i]
 
     def set(self, i, j):
         self.__queens[i] = j  # denote the position of the queen in the row **
-        self.__board[i][j] = 'Q' # 'Q' for Queen
+        self.__board[i][j] = 'Q'  # 'Q' for Queen
 
     def checkDiagonals(self):
-        ans = [[] for i in range(self.__BOARD_SIZE + self.__BOARD_SIZE - 1)]
-        
+        diagonals = [[] for i in range(self.__BOARD_SIZE + self.__BOARD_SIZE - 1)]
+
+        # Build rows representing diagonals of the board
         for i in range(self.__BOARD_SIZE):
             for j in range(self.__BOARD_SIZE):
-                # Build rows representing diagonal of the board
-                ans[i + j].append(self.__board[j][i])
+                diagonals[i + j].append(self.__board[j][i]) # sum of indexes is the same diagonally
             print()
 
         # check for more than one queen in each row
-        for i in range(len(ans)):
-            for j in range(len(ans[i])):
-                print(ans[i][j], end=" ")
-                # if(ans[i][j] == 'X'):
-                #     queen_count += 1
-                #     if queen_count == 2:
-                #         return False
-            print()
+        for i in range(len(diagonals)):
+            queenCount = 0
+            for j in range(len(diagonals[i])):
+                # print(diagonals[i][j], end=" ")  # [1] print each diagonal in a row
+                if (diagonals[i][j] == 'Q'):
+                    queenCount += 1
+                    if queenCount == 2:
+                        return False
+            #print()  # [1] new line when finished printing diagonal in row
+        return True
 
     def isSolved(self) -> bool:
-        # check for more than one queen in rows and columns
-        # might not be neccessary to check horizontally, assignment says 'Place one Queen pr. row'
+        
         for row in range(0, self.__BOARD_SIZE):
-            # num_queens_horizontal = 0 #reset count for each column
+            num_queens_horizontal = 0  # reset count for each column
             num_queens_vertical = 0  # reset count for each row
             for col in range(0, self.__BOARD_SIZE):
-                # if(board[row][col] == 'X'):
-                #     num_queens_horizontal += 1
-                #     if num_queens_horizontal == 2:
-                #         return False
+                if (self.__board[row][col] == 'Q'):
+                    num_queens_horizontal += 1
+                    if num_queens_horizontal == 2:
+                        return False
                 if (self.__board[col][row] == 'Q'):
                     num_queens_vertical += 1
                     if num_queens_vertical == 2:
                         return False
 
-        
-
-        self.checkDiagonals()
+        isValid = self.checkDiagonals()
         self.__board.reverse()
-        self.checkDiagonals()
+        isValid = self.checkDiagonals()
+        self.__board.reverse() # reverse again for printing original configuration
 
-         # check for more than one queen diagonal from right to left
-
-        # cellcount = 2
-        # up_counter = 0
-
-        # for i in range(0, cellcount):
-        #     if cellcount == self.__BOARD_SIZE:
-        #         break
-        #     up_counter = 0
-        #     print('-----------')
-        #     for j in range(cellcount-1,-1,-1):
-        #         print(f' {up_counter} {j}')
-        #         up_counter += 1
-        #     cellcount += 1
-
-        return True
+        return isValid
 
     def printBoard(self):
         for row in range(0, 8):
@@ -78,47 +74,3 @@ class EQ:
                 if col == 0:
                     print("|", end="")
                 print(f'{self.__board[row][col]}|', end='')
-
-        '''
-        0 1
-        1 0
-        
-        0 2
-        1 1
-        2 0
-        
-        0 3
-        1 2
-        2 2
-        3 1
-        
-        0 4
-        1 3
-        2 2
-        3 1
-        4 0
-        
-        0 5
-        1 4
-        2 3
-        3 2
-        4 1
-        5 0
-        
-        0 6
-        1 5
-        2 4
-        3 3
-        4 2
-        5 1
-        6 0
-        
-        0 7
-        1 6
-        2 5
-        3 4
-        4 3
-        5 2
-        6 1
-        7 0
-        '''
