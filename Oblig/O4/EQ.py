@@ -9,7 +9,7 @@ class EQ:
         if(self.__queens[0] != -1):
             for count, ele in enumerate(self.__queens):
                 self.__board[count][ele] = 'Q'
-
+    
     def get(self, i):
         return self.__queens[i]
 
@@ -35,43 +35,36 @@ class EQ:
                     queenCount += 1
                     if queenCount == 2:
                         return False
-            #print()  # [1] new line when finished printing diagonal in row
+            # print()  # [1] new line when finished printing diagonal in row
         return True
 
     def isSolved(self) -> bool:
         
         # check for number of queens vertically
-        #if(ele for ele in self.__queens if self.__queens.count(ele) > 1):
         for i in self.__queens:
-            test =self.__queens.count(i)
-            if self.__queens.count(test) > 1:
+            if (self.__queens.count(i) > 1) and (i != -1):
                 return False
 
         # check for number of queens horizontally
         for row in range(0, self.__BOARD_SIZE):
             num_queens_horizontal = 0  # reset count for each column
-            #num_queens_vertical = 0  # reset count for each row
             for col in range(0, self.__BOARD_SIZE):
                 if (self.__board[row][col] == 'Q'):
                     num_queens_horizontal += 1
                     if num_queens_horizontal == 2:
                         return False
-                # if (self.__board[col][row] == 'Q'):
-                #     num_queens_vertical += 1
-                #     if num_queens_vertical == 2:
-                #         return False
 
-        isValid = self.checkDiagonals() # check 1. diagonal
+        isValid_1 = self.checkDiagonals() # 1. diagonal
         self.__board.reverse()
-        isValid = self.checkDiagonals() # check 2. diagonal
-        self.__board.reverse() # reverse again to print original board layout
+        isValid_2 = self.checkDiagonals() # 2. diagonal
+        self.__board.reverse() # reverse to original board layout
 
-        return isValid
+        return isValid_1 and isValid_2
 
     def printBoard(self):
-        for row in range(0, 8):
+        for row in range(self.__BOARD_SIZE):
             print()
-            for col in range(0, 8):
+            for col in range(self.__BOARD_SIZE):
                 if col == 0:
                     print("|", end="")
                 print(f'{self.__board[row][col]}|', end='')
