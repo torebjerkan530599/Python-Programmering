@@ -6,11 +6,11 @@ class Rectangle2D:
         self.__width = width
         self.__height = height
         
-    # def Rectangle2D(self, x = 0, y = 0, width = 0, height = 0):
-    #     self.__x = x
-    #     self.__y = y
-    #     self.__width = width
-    #     self.__height = height
+        # center point of borders east,west,north,south
+        self.__minX = self.__x - self.__width / 2.0
+        self.__maxX = self.__x + self.__width / 2.0
+        self.__minY = self.__y - self.__height / 2.0
+        self.__maxY = self.__y + self.__height / 2.0
     
     def getX(self) -> float:
         return self.__x
@@ -30,91 +30,73 @@ class Rectangle2D:
     def getPerimeter(self) -> float:
         return self.__width * 2 + self.__height * 2
     
+    def getMinX(self) -> float:
+        return self.__minX
     
-    '''
-    x1 = 9
-    y1 = 1.3
-    width1 = 10
-    height1 = 35.3 
-    '''
+    def getMaxX(self) -> float:
+        return self.__maxX
+    
+    def getMinY(self) -> float:
+        return self.__minX
+    
+    def getMaxY(self) -> float:
+        return self.__maxY
+    
     def containsPoint(self, x1, y1) -> bool: 
-
-        # testkode
-        # xlessTest = self.__x - self.__width / 2.0 # expected 4 # min x
-        # xmoreTest = self.__x + self.__width / 2.0 # expected 14 # max x
-        # ylessTest = self.__y - self.__height / 2.0 # expected -16,35 # min y
-        # ymoreTest = self.__y + self.__height / 2.0 # expected 18.95 # max y
-        
-        # testX = self.__x - self.__width / 2.0 < x1 < self.__x + self.__width / 2.0
-        # testY = self.__y - self.__height / 2.0 < y1 < self.__y + self.__width / 2.0
-
-        return (self.__x - self.__width / 2.0 < x1 < self.__x + self.__width / 2.0) and \
-                    (self.__y - self.__height / 2.0 < y1 < self.__y + self.__width / 2.0) # swap, y increases downward onscreen, decreases upwards onscreen
+        # Assumes positive axis downwards
+        return (self.__minX < x1 < self.__maxX) and \
+                    (self.__minY < y1 < self.__maxY) 
     
     #  Check if another rectangle is inside this rectangle
     def contains(self, another) -> bool:
-        anotherMaxX = another.getX() + another.getWidth() / 2.0
-        anotherMinX = another.getX() - another.getWidth() / 2.0
-        anotherMaxY = another.getY() + another.getHeight() / 2.0
-        anotherMinY = another.getY() - another.getHeight() / 2.0
         
-        minX = self.__x - self.__width / 2.0 # expected 4 # min x
-        maxX = self.__x + self.__width / 2.0 # expected 14 # max x
-        minY = self.__y - self.__height / 2.0 # expected -16,35 # min y
-        maxY = self.__y + self.__height / 2.0 # expected 18.95 # max y
-        
-        
-        xInsideTest = (minX < anotherMinX) and (anotherMaxX < maxX )
-        yInsideTest = (minY < anotherMinY) and (anotherMaxY < maxY )
+        xInside = (self.__minX < another.getMinX()) and (another.getMaxX() < self.__maxX )
+        yInside = (self.__minY < another.getMinY()) and (another.getMaxY() < self.__maxY )
        
-        return xInsideTest and yInsideTest
+        return xInside and yInside
     
-    def overlaps(self, another) -> bool:
-        minX = self.__x - self.__width / 2.0 
-        maxX = self.__x + self.__width / 2.0 
-        minY = self.__y - self.__height / 2.0 
-        maxY = self.__y + self.__height / 2.0 
-        
-        anotherMinX = another.getX() - another.getWidth() / 2.0
-        anotherMaxX = another.getX() + another.getWidth() / 2.0
-        anotherMinY = another.getY() - another.getHeight() / 2.0
-        anotherMaxY = another.getY() + another.getHeight() / 2.0
-        
-        # if area is 0,no overlap
-        if minX == maxX or minY == maxY or anotherMinX == anotherMaxX or anotherMinY == anotherMaxY:
+    def overlaps(self, another) -> bool:     
+        # if area is 0, no overlap
+        if self.__minX == self.__maxX or self.__minY == self.__maxY or another.getMinX() == another.getMaxX() or another.getMinY() == another.getMaxY():
             return False
         # If one rectangle is on left side of other
-        if minX > anotherMaxX or anotherMinX > maxX:
+        if self.__minX > another.getMaxX() or another.getMinX() > self.__maxX:
             return False
         # If one rectangle is above other
-        if maxY > anotherMinY or anotherMaxY > minY:
-            return False
-        
+        if self.__maxY > another.getMinY() or another.getMaxY() > self.__minY:
+            return False     
         return True
     
     # Check if this rectangle is inside another rectangle
     def __contains__(self, another) -> bool:
-        anotherMaxX = another.getX() + another.getWidth() / 2.0
-        anotherMinX = another.getX() - another.getWidth() / 2.0
-        anotherMaxY = another.getY() + another.getHeight() / 2.0
-        anotherMinY = another.getY() - another.getHeight() / 2.0
+               
+        xInside = (self.__minX > another.getMinX()) and (another.getMaxX() > self.__maxX)
+        yInside = (self.__minY > another.getMinY()) and (another.getMaxY() > self.__maxY)
         
-        minX = self.__x - self.__width / 2.0 # expected 4 # min x
-        maxX = self.__x + self.__width / 2.0 # expected 14 # max x
-        minY = self.__y - self.__height / 2.0 # expected -16,35 # min y
-        maxY = self.__y + self.__height / 2.0 # expected 18.95 # max y
-        
-        
-        xInsideTest = (minX > anotherMinX) and (anotherMaxX > maxX )
-        yInsideTest = (minY > anotherMinY) and (anotherMaxY > maxY )
-        
-        return xInsideTest and yInsideTest      
+        return xInside and yInside    
     
-    # compare two cirlces based on their areas? 
-    # def __cmp__:
-    # def __lt__:
-    # def __le__:
-    # def __eq__:
-    # def __ne__:
-    # def __gt__:
-    # def __ge__:
+    def __cmp__(self, other) -> int:
+        if(self.getArea() < other.getArea()):
+            return -1
+        elif self.getArea() > other.getArea():
+            return 1
+        else:
+            return 0
+        
+    def __lt__(self, other) -> bool:
+        return self.getArea() < other.getArea()
+    
+    def __le__(self, other) -> bool:
+        return self.getArea() <= other.getArea()
+    
+    def __eq__(self, other) -> bool:
+        return self.getArea() == other.getArea()
+    
+    def __ne__(self, other) -> bool:
+        return self.getArea() != other.getArea()
+    
+    def __gt__(self, other) -> bool:
+        return self.getArea() > other.getArea()
+    
+    def __ge__(self, other) -> bool:
+        return self.getArea() >= other.getArea()
