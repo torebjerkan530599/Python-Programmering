@@ -8,7 +8,7 @@ class TicTacGui():
     def __init__(self) -> None:
         self.__window = Tk() # Create a root window
         #self.__window.geometry("450x500")
-        self.__window.title("TiC tAc toE") # Set title
+        self.__window.title("Tic tAc toE") # Set title
         self.__buttons = [[1,2,3],[4,5,6],[7,8,9]]
         self.__boardFrame = Frame(self.__window)
         self.__boardFrame.pack()
