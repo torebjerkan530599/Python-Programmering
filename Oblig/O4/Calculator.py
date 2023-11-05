@@ -5,7 +5,7 @@ class Calculator:
     def __init__(self):
         self.__window = Tk()
         self.__window.title("Calculator GUI")
-        
+        self.__log = []
         # self.__operators = Frame(self.__window)
         
         # self.__var = IntVar()
@@ -48,10 +48,17 @@ class Calculator:
 
         self.__logArea = Canvas(self.__window, width = 200, height = 200, bg = "white", bd= 1 , highlightthickness=1, highlightbackground="black") #, bd= 1 , highlightthickness=1, highlightbackground="black"
         self.__logArea.grid(column=1, row = 5, columnspan=  2, padx= 5, pady= 5)
-        
+        self.__logArea.create_text(50, 10, text= self.get_log(), fill="black", font=('Helvetica 10 bold'))
+
+        self.__btCalculate = Button(self.__testFrame, text = "Calculate", command = lambda o1=self.__operand1, o= self.__operator,  
+                                o2=self.__operand2 : self.calculate(o1,o,o2))
+        self.__btClear = Button(self.__testFrame, text = "Clear")
+        self.__btCalculate.grid(row = 5, column=1)
+        self.__btClear.grid(row = 5, column=2) 
+                
         self.__window.mainloop() # Create an event loop
         
-        self.__log = []
+        
         
     def calculate(self,operand1,operand2,operator):
         result = 0
@@ -68,7 +75,7 @@ class Calculator:
         return result
 
     def get_log(self):
-        return self.__log
+        return ' '.join(self.__log)
          
     def get_last_logged(self):
         return self.__log[-1]
