@@ -6,36 +6,46 @@ class Calculator:
         self.__window = Tk()
         self.__window.title("Calculator GUI")
         
-        self.__operators = Frame(self.__window)
+        # self.__operators = Frame(self.__window)
         
-        self.__var = IntVar()
-        self.__btRadioAdd      = Radiobutton(self.__operators, text = "+", variable = self.__var, value =  1, command = self.changeColor) # change to lambda by calling (operand1+operand2)
-        self.__btRadioSubtract = Radiobutton(self.__operators, text = "-", variable = self.__var, value =  2, command = self.changeColor)
-        self.__btRadioMultipy  = Radiobutton(self.__operators, text = "*", variable = self.__var, value =  3, command = self.changeColor)
-        self.__btRadioDivide   = Radiobutton(self.__operators, text = "/", variable = self.__var, value = 4, command = self.changeColor)
+        # self.__var = IntVar()
+        # self.__btRadioAdd      = Radiobutton(self.__operators, text = "+", variable = self.__var, value =  1, command = self.changeColor) # change to lambda by calling (operand1+operand2)
+        # self.__btRadioSubtract = Radiobutton(self.__operators, text = "-", variable = self.__var, value =  2, command = self.changeColor)
+        # self.__btRadioMultipy  = Radiobutton(self.__operators, text = "*", variable = self.__var, value =  3, command = self.changeColor)
+        # self.__btRadioDivide   = Radiobutton(self.__operators, text = "/", variable = self.__var, value = 4, command = self.changeColor)
         
-        Label(self.__window, text = "Operand 1").grid(row = 1, 
-            column = 1, sticky = W)
-        Label(self.__window, text = "Operator ").grid(row = 2, 
-            column = 1, sticky = W)
-        Label(self.__window, text = "Operand 2").grid(row = 3, 
-            column = 1, sticky = W)
-        Label(self.__window, text = "Result   ").grid(row = 4, 
-            column = 1, sticky = W)
+        self.__testFrame = Frame(self.__window, width=200, height=200, padx=5,pady=5, bd=1, highlightthickness=1, highlightbackground="black")
+        self.__testFrame.grid(row=1,column=1)
+        lblOp1 = Label(self.__testFrame, text = "Operand 1")
+        lblOpe = Label(self.__testFrame, text = "Operator ")
+        lblOp2 = Label(self.__testFrame, text = "Operand 2")
+        result = Label(self.__testFrame, text = "Result   ")
         
+        lblOp1.grid(row = 1, 
+            column = 1, sticky = W)
+        lblOpe.grid(row = 2, 
+            column = 1, sticky = W)
+        lblOp2.grid(row = 3, 
+            column = 1, sticky = W)
+        result.grid(row = 4, 
+            column = 1, sticky = W)
         
         self.__operand1 = StringVar()
-        Entry(self.__window, textvariable = self.__operand1, 
-            justify = RIGHT).grid(row = 1, column = 2)
+        eOp1 = Entry(self.__testFrame, textvariable = self.__operand1, 
+            justify = RIGHT)
         
         self.__operator = StringVar()
-        Entry(self.__window, textvariable = self.__operator, 
-            justify = RIGHT).grid(row = 2, column = 2)
+        eOpe = Entry(self.__testFrame, textvariable = self.__operator, 
+            justify = RIGHT)
         
         self.__operand2 = StringVar()
-        Entry(self.__window, textvariable = self.__operand2, 
-            justify = RIGHT).grid(row = 3, column = 2)
+        eOp2 = Entry(self.__testFrame, textvariable = self.__operand2, 
+            justify = RIGHT)
          
+        eOp1.grid(row = 1, column = 2)
+        eOpe.grid(row = 2, column = 2)
+        eOp2.grid(row = 3, column = 2)
+
         self.__logArea = Canvas(self.__window, width = 200, height = 200, bg = "white", bd= 1 , highlightthickness=1, highlightbackground="black") #, bd= 1 , highlightthickness=1, highlightbackground="black"
         self.__logArea.grid(column=1, row = 5, columnspan=  2, padx= 5, pady= 5)
         
