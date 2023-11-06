@@ -1,22 +1,43 @@
+import tkinter as tk
+from tkinter import ttk
 
-# Display table body
-for i in range(1, 10):
-    print(i, "|", end = '')
-    for j in range(1, 10): 
-        # Display the product and align properly
-        print(format(i * j, '4d'), end = '')
-    print()# Jump to the new line
-    
-    import random 
- 
-matrix = [] # Create an empty list 
- 
-numberOfRows = int(input("Enter the number of rows: ")) 
-numberOfColumns = int(input("Enter the number of columns: ")) 
-for row in range(numberOfRows): 
-    matrix.append([])
-    for column in range(numberOfColumns): 
-        matrix[row].append(random.randint(0, 99))
-    
+class App(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title('Tkinter StringVar')
+        self.geometry("300x80")
 
-print(matrix) 
+        self.name_var = tk.StringVar()
+
+        self.columnconfigure(0, weight=1)
+        self.columnconfigure(1, weight=1)
+        self.columnconfigure(2, weight=1)
+
+        self.create_widgets()
+
+    def create_widgets(self):
+
+        padding = {'padx': 5, 'pady': 5}
+        # label
+        ttk.Label(self, text='Name:').grid(column=0, row=0, **padding)
+
+        # Entry
+        name_entry = ttk.Entry(self, textvariable=self.name_var)
+        name_entry.grid(column=1, row=0, **padding)
+        name_entry.focus()
+
+        # Button
+        submit_button = ttk.Button(self, text='Submit', command=self.submit)
+        submit_button.grid(column=2, row=0, **padding)
+
+        # Output label
+        self.output_label = ttk.Label(self)
+        self.output_label.grid(column=0, row=1, columnspan=3, **padding)
+
+    def submit(self):
+        self.output_label.config(text=self.name_var.get())
+
+
+if __name__ == "__main__":
+    app = App()
+    app.mainloop()
