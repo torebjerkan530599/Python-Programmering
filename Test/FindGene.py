@@ -3,7 +3,7 @@ Beskrivelse av hva jeg forandret i koden:
 
 Jeg gjorde først om koden til en funksjon som jeg puttet i en klasse og fulgte anbefalingene i oppgaven.
 Deretter oppdaget jeg i en av testene at jeg ikke kontrollerer om input kun benytter tegnene 'A','T','C' og'G'
-Tilføyde derfor en kontroll først i funksjonen som undersøker om andre tegne 
+Tilføyde derfor en kontroll først i funksjonen som undersøker om det forekommer irrelevante tegn 
 
 '''
 

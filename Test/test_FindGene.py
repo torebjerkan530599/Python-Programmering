@@ -26,6 +26,10 @@ class Test_genome(unittest.TestCase):
         result = self.__gene_detector.findGenes("TTATGTTTTAAGGATGGGGCGTTAGTT")
         isMultipleOfThree = len(result) % 3
         self.assertTrue(isMultipleOfThree == 0)
+        
+    def test_no_termination(self):
+        result = self.__gene_detector.findGenes("ATGAAA")
+        self.assertEqual(result, "No genes found")
     
     def test_sequence_is_incorrect_length(self):
         result = self.__gene_detector.findGenes("TTATGTTTTAAGGATGGGGCGAGT")
@@ -55,14 +59,6 @@ class Test_genome(unittest.TestCase):
         genome = "TTATGTTpTAA"
         result = self.__gene_detector.findGenes(genome)
         self.assertEqual(result, "Invalid symbol detected")
-        
-        
-    
-
-    
-        
-    # def test_sequene_is_incorrect_length(self):
-    #     result = self.__gene_detector.findGenes()
 
 if __name__ == '__main__':
 
