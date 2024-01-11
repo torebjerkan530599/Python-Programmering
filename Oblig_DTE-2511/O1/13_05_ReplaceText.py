@@ -1,8 +1,6 @@
-import os.path
-
-file_name = 'test.txt' #input('Enter a filename:')
-old_string = 'morning' #input('Enter the old string to be replaced:')
-new_string = 'midnight' #input('Enter the new string to replace the old string:')
+file_name = input('Enter a filename:')
+old_string = input('Enter the old string to be replaced:')
+new_string = input('Enter the new string to replace the old string:')
 
 file = open(file_name,'r')
     
