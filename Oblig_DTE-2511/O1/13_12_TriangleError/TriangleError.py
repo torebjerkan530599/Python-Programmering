@@ -1,4 +1,4 @@
-class TriangleError(RuntimeError):
+class TriangleError(RuntimeError): # Hva er hensikten med denne klassen? Skal den gjøre noe mer?
     def __init__(self, side1, side2, side3):
         self.__side1 = side1
         self.__side2 = side2
