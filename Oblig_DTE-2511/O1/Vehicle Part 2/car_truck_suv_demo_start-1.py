@@ -3,12 +3,8 @@
 import os.path
 import pickle
 from pathlib import Path
-from Car import Car
-from Suv import Suv
-from Truck import Truck
 
-
-
+import Vehicle
 # Constants for the menu choices
 class Codes:
     NEW_CAR_CHOICE = 1
@@ -26,10 +22,6 @@ except FileNotFoundError:
     print('file not found')
 
 def main():
-    # Create empty list for vehicles
-    #file = 'vehicles.txt'
-    #if os.path.isfile(file):
-    #vehicles_list = [] # dekker uansett kravet om en tom liste dersom filen ikke eksisterer fylles den ikke
     
     while True:
         # display the menu.
@@ -38,53 +30,12 @@ def main():
         # Get the user's choice.
         choice = int(input('Enter your choice: '))
         switch(choice)
-
-
-        # Perform the selected action.
-        # if choice == NEW_CAR_CHOICE:
-        #     print('Add a new car')
-        # elif choice == NEW_TRUCK_CHOICE:
-        #     print('Add a new truck')
-        # elif choice == NEW_SUV_CHOICE:
-        #     print('Add a new SUV')
-        # elif choice == FIND_VEHICLE_CHOICE:
-        #     print('Find vehicle by name')
-        # elif choice == SHOW_VEHICLES_CHOICE:
-        #     #show all vehicles
-        #     print('The following cars are in inventory:')
-        #     for item in vehicles_list:
-        #         if item is car:
-        #             print(car)
-        #         elif item is truck:
-        #             print(truck)
-        #         else:
-        #             print(suv)
-        # elif choice == QUIT_CHOICE:
-        #     print('Exiting the program...')    
-        # else:
-        #     print('Error: invalid selection.')    
-
-# The display_menu function displays a menu.
-def display_menu():
-    print('\n')
-    print('        MENU')
-    print('1) New car')
-    print('2) New truck')
-    print('3) New SUV')
-    print('4) Find vehicles by make')
-    print('5) Show all vehicles')
-    print('6) Quit')
-    print()
     
 def switch(choice):
     
     match choice:
-        case Codes.NEW_CAR_CHOICE:
-            print('Add a new car')
-        case Codes.NEW_TRUCK_CHOICE:
-            print('Add a new truck')
-        case Codes.NEW_SUV_CHOICE:
-            print('Add a new SUV')
+        case Codes.NEW_CAR_CHOICE | Codes.NEW_TRUCK_CHOICE | Codes.NEW_SUV_CHOICE:
+            add_vehicle(choice)
         case Codes.FIND_VEHICLE_CHOICE:
             name = input('Find vehicle by name: ')
             vehicles = [line for line in content.splitlines() if line.startswith(name)]
@@ -110,6 +61,52 @@ def switch(choice):
         case _:  
             print('Error: invalid selection.') 
 
+def add_vehicle(choice):
+    # make = input('Enter make: ')
+    # model = input('Enter model: ')    
+    # mileage = input('Enter milage: ')
+    # price = input('Enter price: ')
+
+    make = 'KIA', 
+    model = '2003'
+    mileage = '20034'
+    price = '45959'
+    if choice == Codes.NEW_CAR_CHOICE:
+        #doors = input('Enter doors: ')
+        doors = '4'
+        new_car = Vehicle.Car(make,model,mileage,price,doors)
+        print(new_car)
+        
+        
+    if choice == Codes.NEW_TRUCK_CHOICE:
+        #drive_type = input('Enter drive type: ')
+        drive_type = '3D'
+        truck = Vehicle.Truck(make,model,mileage,price,drive_type)
+    if choice == Codes.NEW_SUV_CHOICE:
+        #passengers = input('Enter passengers: ')
+        passengers = '50'
+        suv = Vehicle.Suv(make,model,mileage,price,passengers)
+
+# The display_menu function displays a menu.
+def display_menu():
+    print('\n')
+    print('        MENU')
+    print('1) New car')
+    print('2) New truck')
+    print('3) New SUV')
+    print('4) Find vehicles by make')
+    print('5) Show all vehicles')
+    print('6) Quit')
+    print()
+
 # Call the main function.
 if __name__ == '__main__':
       main()
+      
+
+
+
+    # Create empty list for vehicles
+    #file = 'vehicles.txt'
+    #if os.path.isfile(file):
+    #vehicles_list = [] # dekker uansett kravet om en tom liste dersom filen ikke eksisterer fylles den ikke

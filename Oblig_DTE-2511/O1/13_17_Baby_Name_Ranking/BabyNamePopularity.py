@@ -8,17 +8,20 @@ base_address = "https://liveexample.pearsoncmg.com/data/babynameranking"
 
 #testdata
 year = "2001"
-gender = "girl" 
-name = "Jonathan"
+gender = 'f'
+name = "Alyssa"
 
 data = urllib.request.urlopen(base_address+year+".txt")
 
 for line in data.readlines():
     ranking = line.decode().split()
-    if name in ranking:
-        print(ranking[0])
-        break
-
-
-# hvorfor er det viktig å vite kjønn?
+    if gender == 'm':
+        if name in ranking[1]:
+            print(f'ranking: {ranking[0]}')
+            break
+    else:
+         if name in ranking[3]:
+            print(f'ranking: {ranking[0]}')
+            break
+        
 
