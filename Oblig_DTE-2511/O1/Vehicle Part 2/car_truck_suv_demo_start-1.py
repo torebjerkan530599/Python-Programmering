@@ -21,6 +21,8 @@ try:
 except FileNotFoundError:
     print('file not found')
 
+vehicle_collection = []
+
 def main():
     
     while True:
@@ -35,7 +37,9 @@ def switch(choice):
     
     match choice:
         case Codes.NEW_CAR_CHOICE | Codes.NEW_TRUCK_CHOICE | Codes.NEW_SUV_CHOICE:
-            add_vehicle(choice)
+            vehicle_collection.append(new_vehicle(choice))
+            # with open("vehicles.dat", 'wb') as picklefile:
+            #     picklefile.write(vehicle_collection)
         case Codes.FIND_VEHICLE_CHOICE:
             name = input('Find vehicle by name: ')
             vehicles = [line for line in content.splitlines() if line.startswith(name)]
@@ -43,17 +47,33 @@ def switch(choice):
                 [print(line) for line in vehicles]
             else:
                 print('No vehicles found...')
+                
+                
+        # -------------------WIP------------------------------ #
         case Codes.SHOW_VEHICLES_CHOICE:
             print('The following cars are in inventory:')
-            [print(line) for line in content.splitlines()]
+            inputFile = open(Path(__file__).parent / "vehicles.dat","rb")
+            end_of_file = False
+            while not end_of_file:
+                try:
+                    print(pickle.load(inputFile), end = '')
+                except EOFError:
+                    end_of_file = True
+            inputFile.close()
+            #[print(line) for line in content.splitlines()]
+        # -------------------WIP------------------------------ #
         case Codes.QUIT_CHOICE:
             vehicles = [line for line in content.splitlines()]
             vehicles.sort()
             # Oppgave: Når programmet avsluttes så skal alle kjøretøy sorteres og skrives til fil (pickle / unpickle)
+            
             outputfile = open(Path(__file__).parent / 'vehicles.dat',"wb")
-            for v in vehicles:
-                pickle.dump(v,outputfile)
-            outputfile.close()
+            
+            with open("vehicles.dat", 'wb') as picklefile:
+                picklefile.write(vehicle_collection)
+            # for v in vehicles:
+            #     pickle.dump(v,outputfile)
+            # outputfile.close()
             
             # les fra binærfilen
             
@@ -61,7 +81,7 @@ def switch(choice):
         case _:  
             print('Error: invalid selection.') 
 
-def add_vehicle(choice):
+def new_vehicle(choice):
     # make = input('Enter make: ')
     # model = input('Enter model: ')    
     # mileage = input('Enter milage: ')
@@ -74,18 +94,16 @@ def add_vehicle(choice):
     if choice == Codes.NEW_CAR_CHOICE:
         #doors = input('Enter doors: ')
         doors = '4'
-        new_car = Vehicle.Car(make,model,mileage,price,doors)
-        print(new_car)
-        
-        
+        return Vehicle.Car(make,model,mileage,price,doors)
+        #print(new_car)
     if choice == Codes.NEW_TRUCK_CHOICE:
         #drive_type = input('Enter drive type: ')
         drive_type = '3D'
-        truck = Vehicle.Truck(make,model,mileage,price,drive_type)
+        return Vehicle.Truck(make,model,mileage,price,drive_type)
     if choice == Codes.NEW_SUV_CHOICE:
         #passengers = input('Enter passengers: ')
         passengers = '50'
-        suv = Vehicle.Suv(make,model,mileage,price,passengers)
+        return Vehicle.Suv(make,model,mileage,price,passengers)
 
 # The display_menu function displays a menu.
 def display_menu():
