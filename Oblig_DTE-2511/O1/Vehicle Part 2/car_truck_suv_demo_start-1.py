@@ -21,7 +21,9 @@ try:
 except FileNotFoundError:
     print('file not found')
 
-vehicle_collection = []
+vehicle_collection = [Vehicle.Car('BMW 320', '2001', '70000', '15000.0' , '4'), 
+                      Vehicle.Suv('Volvo XC60', '2010', ' 30000' , ' 18500.0', 5), 
+                      Vehicle.Truck('Toyota RAV4', '2002', '40000', '12000.0', '4WD')]
 
 def main():
     
@@ -53,13 +55,17 @@ def switch(choice):
         case Codes.SHOW_VEHICLES_CHOICE:
             print('The following cars are in inventory:')
             inputFile = open(Path(__file__).parent / "vehicles.dat","rb")
+            objects = []
             end_of_file = False
             while not end_of_file:
                 try:
-                    print(pickle.load(inputFile), end = '')
+                    objects = pickle.load(inputFile)
                 except EOFError:
                     end_of_file = True
             inputFile.close()
+            
+            for o in objects:
+                print(o)
             #[print(line) for line in content.splitlines()]
         # -------------------WIP------------------------------ #
         case Codes.QUIT_CHOICE:
@@ -69,14 +75,20 @@ def switch(choice):
             
             outputfile = open(Path(__file__).parent / 'vehicles.dat',"wb")
             
-            with open("vehicles.dat", 'wb') as picklefile:
-                picklefile.write(vehicle_collection)
-            # for v in vehicles:
-            #     pickle.dump(v,outputfile)
-            # outputfile.close()
+            #skriv
+            with open(outputfile) as file:
+                    pickle.dump(vehicle_collection,file)
             
-            # les fra binærfilen
+            objects = []
             
+            # les
+            print('Vehicles written to file: ')
+            with open('vehicles.dat', 'rb') as file:
+                objects = pickle.load(file)
+            
+            for o in objects:
+                print(o)
+                    
             exit('Exiting the program...')
         case _:  
             print('Error: invalid selection.') 

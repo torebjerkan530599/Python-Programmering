@@ -19,23 +19,20 @@ except HTTPError as ex:
     print(f'may be you entered the wrong year?')
     exit()
 
+col = 1 if gender == 'm' else 3 # effektivisering av søk
+
 ranking = ''
 for line in data.readlines():
     ranking = line.decode().split()
-    if gender == 'm':
-        if name in ranking[1]:
-            print(f'ranking: {ranking[0]}')
-            break
-    else:
-         if name in ranking[3]:
-            print(f'ranking: {ranking[0]}')
-            break
+    if name in ranking[col]:
+        print(f'ranking: {ranking[0]}')
+        break
 
-if(ranking[1] != name and ranking[3] != name):
+if(ranking[col] != name):
     print('name not found')
     exit()
-    
-print(f'Total description of entry: {" ".join(ranking)} ')
+else:
+    print(f'Total description of entry: {" ".join(ranking)} ')
 
 
 
