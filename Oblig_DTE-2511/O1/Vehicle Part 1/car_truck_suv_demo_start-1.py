@@ -1,8 +1,6 @@
 # This program creates a Car object, a Truck object,
-# and an SUV object
-from Car import Car
-from Suv import Suv
-from Truck import Truck
+# and an SUV object.
+import Vehicle
 
 # Constants for the menu choices
 NEW_CAR_CHOICE = 1
@@ -18,17 +16,17 @@ def main():
     # Create a Car object for a used 2001 BMW
     # with 70,000 miles, priced at $15,000, with
     # 4 doors.
-    car = Car('BMW 320', 2001, 70000, 15000.0, 4)
+    car = Vehicle.Car('BMW 320', 2001, 70000, 15000.0, 4)
     vehicles_list.append(car)
     # Create a Truck object for a used 2002
     # Toyota pickup with 40,000 miles, priced
     # at $12,000, with 4-wheel drive.
-    truck = Truck('Toyota RAV4', 2002, 40000, 12000.0, '4WD')
+    truck = Vehicle.Truck('Toyota RAV4', 2002, 40000, 12000.0, '4WD')
     vehicles_list.append(truck)
     # Create an SUV object for a used 2000
     # Volvo with 30,000 miles, priced
     # at $18,500, with 5 passenger capacity.
-    suv = Suv('Volvo XC60', 2010, 30000, 18500.0, 5)
+    suv = Vehicle.Suv('Volvo XC60', 2010, 30000, 18500.0, 5)
     vehicles_list.append(suv)
 
     choice = 0
@@ -52,12 +50,7 @@ def main():
             #show all vehicles
             print('The following cars are in inventory:')
             for item in vehicles_list:
-                if item is car:
-                    print(car)
-                elif item is truck:
-                    print(truck)
-                else:
-                    print(suv)
+                print(item)
         elif choice == QUIT_CHOICE:
             print('Exiting the program...')    
         else:
