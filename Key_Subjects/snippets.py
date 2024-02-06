@@ -19,11 +19,11 @@
 
 # Theme: Dictionary
 
-''' 
-Assignment text:
-Assume there is a variable, mp_affiliation, associated with a dictionary that maps the names of parliament members to party affiliations. 
-Create party_size a dictionary that maps party names to the number of members they have.
-'''
+# ''' 
+# Assignment text:
+# Assume there is a variable, mp_affiliation, associated with a dictionary that maps the names of parliament members to party affiliations. 
+# Create party_size a dictionary that maps party names to the number of members they have.
+# '''
 
 
 mp_affiliation = {
@@ -37,7 +37,15 @@ mp_affiliation = {
 
 party_size = {}
 
-for member,party in mp_affiliation.items():
+# for member,party in mp_affiliation.items(): # items() returnerer tuple!!!
+#     if party in party_size:
+#         party_size[party] += 1
+#     else:
+#         party_size[party] = 1
+
+#or
+
+for party in mp_affiliation.values():
     if party in party_size:
         party_size[party] += 1
     else:
@@ -46,22 +54,35 @@ for member,party in mp_affiliation.items():
 #reverse the pairs in a dictionary...
 pairs = list(party_size.items())      
 items = [[count, word] for (word, count) in pairs] #... using comprehension
-print(items)
+print(party_size)
 
 
 # You can create the dictionary dict1 by using the zip function to pair elements from list1 and list2
-'''his code uses the zip function to pair corresponding elements from list1 and list2, and then the dict constructor is used to convert those pairs into a dictionary. The resulting dict1 will map each element of list1 to its corresponding element in list2.'''
-list1 = ['apple', 'banana', 'orange', 'grape']
-list2 = [3, 6, 2, 8]
+# '''his code uses the zip function to pair corresponding elements from list1 and list2, and then the dict constructor is used to convert those pairs into a dictionary. The resulting dict1 will map each element of list1 to its corresponding element in list2.'''
+# list1 = ['apple', 'banana', 'orange', 'grape']
+# list2 = [3, 6, 2, 8]
 
-dict1 = dict(zip(list1, list2))
+# dict1 = dict(zip(list1, list2))
 
-# Print the result
-print("List 1:", list1)
-print("List 2:", list2)
-print("Resulting dictionary dict1:", dict1)
+# # Print the result
+# print("List 1:", list1)
+# print("List 2:", list2)
+# print("Resulting dictionary dict1:", dict1)
 
 
-#Create a dictionary named squares that maps the first n counting numbers to their squares.
-n = 10
-squares = {i: i**2 for i in range(1, n+1)}
+# #Create a dictionary named squares that maps the first n counting numbers to their squares.
+# n = 10
+# squares = {i: i**2 for i in range(1, n+1)}
+
+
+# t1 = (1) # creates an int that equals 1
+# t2 = (1,) # creates an tuple with only one value
+
+#assignment 14.2 Question 7 of 11
+# t = ('a', 'z', 'Z', 'G', 'X')
+# temp = sorted(list(t))
+# t = tuple(temp)
+# print(t)
+
+# t = (1, 2, 4, 3) 
+# print(f' {t[1 : -1]}')

@@ -1,13 +1,15 @@
+import os.path
+
 #file_name = input('Enter a filename:')
-
-# a dictionary with values as a set will look like this:
-# d = {key:(value1, value2, value3)}
-
 file_name = 'initials.txt'
 
-file = open(file_name,'r')
-text = file.read().split()
-file.close()
+if os.path.isfile(file_name):
+    file = open(file_name,'r')
+    text = file.read().split()
+    file.close()
+else:
+    print('File not found\n')
+
 word_dict = {}
 
 for word in text:
@@ -16,12 +18,19 @@ for word in text:
         word_dict[word[0]] = set()
     word_dict[initial].add(word)
 
+# option 1: make upper and lower-case appear next to eachother
+sorted_list = list(word_dict.keys())
+sorted_list.sort(key=lambda initial:initial.lower())
+sorted_dict = {i: word_dict[i] for i in sorted_list}
 
-sorted_dict = sorted(word_dict.items())
+# option 2: print all uppercase first then all lowercase
+# sorted_dict = sorted(word_dict.items())
+# for k,v in sorted_dict:
+# ...
 
-for k,v in sorted_dict:
-     print(k)
-     print(f'\t {", ".join(str(e) for e in v)}')
+for k,v in sorted_dict.items():
+    print(k)
+    print(f'\t {", ".join(str(e) for e in v)}')
     
 
 
