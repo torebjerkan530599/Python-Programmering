@@ -86,3 +86,25 @@ print(party_size)
 
 # t = (1, 2, 4, 3) 
 # print(f' {t[1 : -1]}')
+
+#comprehension for dictionary
+# from pathlib import Path
+# import pickle
+
+# def fileToDictionary(txt_file):
+#     vehicles_dict = {}
+#     try:
+#         path = Path(__file__).parent / txt_file # reading from the text file in the directory code is run from
+#         content = path.read_text(encoding="utf-8")
+#         vehicles_list = [line for line in content.splitlines()]
+#         #[print(line) for line in vehicles_list]
+#         for line in vehicles_list:
+#             key, value = line.strip().split(', ')
+#             vehicles_dict[key] = value
+#         vehicles_dict = {key: value for line in vehicles_list for key, value in [line.strip().split(', ')]}
+#         #print(vehicles_dict)
+#     except FileNotFoundError:
+#         print('file not found')
+    
+# if __name__ == "__main__":
+#     fileToDictionary('box_a.txt')
