@@ -30,7 +30,6 @@ def listSpeeders(filename_a, filename_b, speed_limit, distance):
     a_dict = fileToDictionary(filename_a)
     b_dict = fileToDictionary(filename_b)
     
-
     for licence_plate in a_dict:
         if licence_plate in b_dict: # check if the car reached box_b
             datetime_object_a = datetime.strptime(a_dict[licence_plate], '%Y-%m-%d %H:%M:%S') #convert string to datetime object
@@ -40,8 +39,6 @@ def listSpeeders(filename_a, filename_b, speed_limit, distance):
             if(speed > speed_with_margin):
                 print(f'{licence_plate} : {speed:.2f} km/h')
             
-            
-    
 if __name__ == "__main__":
     listSpeeders('box_a.txt','box_b.txt', SPEED_LIMIT, DISTANCE)
     
