@@ -16,6 +16,8 @@ class Choice:
     QUIT = 7
     
 def main():
+    vehicle_list = []
+    
     if os.path.isfile('vehicles.dat'):
         with open('vehicles.dat', 'rb') as file:
             vehicle_list = pickle.load(file)    
@@ -25,10 +27,10 @@ def main():
                        Vehicle.Suv('Volvo XC60', '2010', ' 30000' , 18500.0, 5, 'TEST123'), 
                        Vehicle.Truck('Toyota RAV4', 2002, 40000, 12000.0, '4WD', 'TEST234')]
         
-        with open('vehicles.dat', 'wb') as picklefile:
-            pickle.dump(vehicle_list, picklefile)
-            print('vehicles.dat was created in current working directory')
-            print('vehciles.dat contains the following vehicles initially: ')
+        # with open('vehicles.dat', 'wb') as picklefile:
+        #     pickle.dump(vehicle_list, picklefile)
+        #     print('vehicles.dat was created in current working directory')
+        #     print('vehciles.dat contains the following vehicles initially: ')
         for vehicle in vehicle_list:
             print(vehicle)
     
@@ -44,7 +46,7 @@ def main():
             print('Invalid type of input. Only numbers accepted. Text or other symbols is not valid')
     
 def switch(choice,vehicle_list):
-
+    
     match choice:
         case Choice.NEW_CAR | Choice.NEW_TRUCK | Choice.NEW_SUV:
             vehicle_list.append(new_vehicle(choice))
@@ -59,17 +61,21 @@ def switch(choice,vehicle_list):
             print('The following cars are in inventory:')
             for v in vehicle_list:
                 print(v)
-        
-                    
-        case Choice.SHOW_TICKETS:
-            speeders_dict = Speeders.listSpeeders('box_a.txt', 'box_b.txt', Speeders.SPEED_LIMIT, Speeders.DISTANCE)
+                         
+        case Choice.SHOW_TICKETS:            
             for vehicle in vehicle_list:
+                speeders_dict = Speeders.listSpeeders('box_a.txt', 'box_b.txt', Speeders.SPEED_LIMIT, Speeders.DISTANCE)
                 if vehicle.licence_plate in speeders_dict:
                     ticket = Vehicle.SpeedTicket(vehicle.licence_plate, speeders_dict[vehicle.licence_plate][1], speeders_dict[vehicle.licence_plate][0], Speeders.SPEED_LIMIT)
-                    # if ticket not in vehicle.tickets:
-                    #      vehicle.tickets = ticket
-                    print(ticket)
-                
+                    if ticket not in vehicle.get_tickets(): #if speeding ticket not registred before
+                        vehicle.set_ticket(ticket)
+                    #print(ticket)
+            for v in vehicle_list:
+                if v.get_tickets():
+                    print(*v.get_tickets(), sep=", ")
+                    #print(v.get_tickets())
+                    
+                                            
         case Choice.QUIT:
             vehicle_collection_sorted = sorted(vehicle_list, key=lambda vehicle: vehicle.make, reverse=False)
             

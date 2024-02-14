@@ -1,10 +1,8 @@
 from pathlib import Path
-import time
 from datetime import datetime
 import pickle
 
 def fileToDictionary(txt_file) -> dict:
-    vehicles_dict = {}
     try:
         path = Path(__file__).parent / txt_file # reading from the text file in the directory code is run from
         content = path.read_text(encoding="utf-8")
@@ -44,7 +42,7 @@ def listSpeeders(filename_a, filename_b, speed_limit, distance):
                 # print(f'{licence_plate} : {speed:.3f} km/h')
                 dict_speeders[licence_plate] = (float(format(speed, ".3f")),a_dict[licence_plate])
                 
-    #print(dict_speeders)
+    #print(f'speeders: {dict_speeders}')
     return dict_speeders    
 if __name__ == "__main__":
     lawbreakers = listSpeeders('box_a.txt','box_b.txt', SPEED_LIMIT, DISTANCE)
