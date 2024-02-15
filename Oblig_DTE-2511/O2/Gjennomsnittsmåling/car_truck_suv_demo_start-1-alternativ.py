@@ -26,15 +26,13 @@ def main():
         vehicle_list = [Vehicle.Car('BMW 320', 2001, 70000, 15000.0 , 4, 'FY99401'), 
                        Vehicle.Suv('Volvo XC60', '2010', ' 30000' , 18500.0, 5, 'TEST123'), 
                        Vehicle.Truck('Toyota RAV4', 2002, 40000, 12000.0, '4WD', 'TEST234')]
-        
-        # with open('vehicles.dat', 'wb') as picklefile:
-        #     pickle.dump(vehicle_list, picklefile)
-        #     print('vehicles.dat was created in current working directory')
-        #     print('vehciles.dat contains the following vehicles initially: ')
-        for vehicle in vehicle_list:
-            print(vehicle)
     
-    while True:
+    print("\nSome test vehicles:\n")
+    for vehicle in vehicle_list:
+        print(vehicle)
+    
+    choice = None
+    while choice != Choice.QUIT:
         # display the menu.
         display_menu()
 
@@ -48,7 +46,7 @@ def main():
 def switch(choice,vehicle_list):
     
     match choice:
-        case Choice.NEW_CAR | Choice.NEW_TRUCK | Choice.NEW_SUV:
+        case Choice.NEW_CAR | Choice.NEW_TRUCK | Choice.NEW_SUV: 
             vehicle_list.append(new_vehicle(choice))
             
         case Choice.FIND_VEHICLE:
@@ -62,18 +60,19 @@ def switch(choice,vehicle_list):
             for v in vehicle_list:
                 print(v)
                          
-        case Choice.SHOW_TICKETS:            
+        case Choice.SHOW_TICKETS:
+            speeders_dict = Speeders.listSpeeders('box_a.txt', 'box_b.txt', Speeders.SPEED_LIMIT, Speeders.DISTANCE)          
             for vehicle in vehicle_list:
-                speeders_dict = Speeders.listSpeeders('box_a.txt', 'box_b.txt', Speeders.SPEED_LIMIT, Speeders.DISTANCE)
                 if vehicle.licence_plate in speeders_dict:
                     ticket = Vehicle.SpeedTicket(vehicle.licence_plate, speeders_dict[vehicle.licence_plate][1], speeders_dict[vehicle.licence_plate][0], Speeders.SPEED_LIMIT)
-                    if ticket not in vehicle.get_tickets(): #if speeding ticket not registred before
-                        vehicle.set_ticket(ticket)
-                    #print(ticket)
+                    #if ticket not in vehicle.tickets: #if speeding ticket not registred before
+                    vehicle.tickets = ticket # not need to check if it's registred before. Key in dictonary is unique
+                    print(f'{ticket} (__str__ in SpeedTicket class)')
+                    
             for v in vehicle_list:
-                if v.get_tickets():
-                    print(*v.get_tickets(), sep=", ")
-                    #print(v.get_tickets())
+                if v.tickets:
+                    print('\n'.join(f'Date: {k}\t, Licence: {v} (datastructure in Vehicle)' \
+                        for k, v in v.tickets.items())) # https://stackoverflow.com/questions/44689546/how-to-print-out-a-dictionary-nicely-in-python
                     
                                             
         case Choice.QUIT:
@@ -91,9 +90,6 @@ def switch(choice,vehicle_list):
                 for v in vehciles:
                     print(v)
                     
-            exit('Exiting the program...')
-
-                
         case _:  
             print('Error: invalid selection. Only 1-6 is valid') 
 

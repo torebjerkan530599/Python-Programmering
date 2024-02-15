@@ -5,8 +5,14 @@ class Vehicle:
         self.__mileage = mileage
         self.__price = price
         self.__licence_plate = licence_plate
-        self.__tickets = set()
-        
+        self.__tickets = {}
+    
+    # def get_tickets(self):
+    #     return self.__tickets
+    
+    # def set_ticket(self, ticket):
+    #     self.__tickets[ticket.date] = ticket.licence_plate
+    
     @property
     def make(self):
         return self.__make
@@ -48,21 +54,16 @@ class Vehicle:
         self.__licence_plate = value
 
     #No idea how to make lists work with @property and @tickets.setter
-    # @property
-    # def tickets(self):
-    #     return self.__tickets
+    @property
+    def tickets(self):
+        return self.__tickets
 
-    # @tickets.setter
-    # def tickets(self, value):
-    #     self.__tickets.append(value)
-        #self.__tickets = value #hmmm
+    @tickets.setter
+    def tickets(self, ticket):
+        self.__tickets[ticket.date] = ticket.licence_plate
         
     
-    def get_tickets(self):
-        return self.__tickets
-    
-    def set_ticket(self, ticket):
-        self.__tickets.append(ticket)
+
 
     def __str__(self) -> str:
         return f'Make: {self.__make} Model: {self.__model} Milage: {self.__mileage} Price: {self.__price} Registration: {self.__licence_plate}'
@@ -123,8 +124,19 @@ class SpeedTicket():
         self.__speed = speed
         self.__speed_limit = speed_limit
     
-    def __str__(self):
-        return f'\n***Speeding Ticket***\n Licence plate: {self.__license_plate}, Date: {self.__date}, Speed: {self.__speed}, Speed Limit: {self.__speed_limit}'
+    @property
+    def licence_plate(self):
+        return self.__license_plate
     
-    def __repr__(self):
+    @property
+    def date(self):
+        return self.__date
+    
+    def __str__(self):
+        return f'\n***Speeding Ticket***\nLicence plate: {self.__license_plate}, Date: {self.__date}, Speed: {self.__speed}, Speed Limit: {self.__speed_limit}'
+    
+    def __repr__(self): # because get_tickets retuns a list of objects of type SpeedTicket()
         return self.__str__()
+    
+    
+    
