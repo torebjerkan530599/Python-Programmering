@@ -1,7 +1,7 @@
 import os.path
 
-#file_name = input('Enter a filename:')
-file_name = 'initials.txt'
+file_name = input('Enter a filename:')
+#file_name = 'initials.txt'
 
 if os.path.isfile(file_name):
     file = open(file_name,'r')

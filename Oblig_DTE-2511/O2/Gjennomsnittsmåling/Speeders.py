@@ -1,19 +1,11 @@
 from pathlib import Path
 from datetime import datetime
-import pickle
 
 def fileToDictionary(txt_file) -> dict:
     try:
         path = Path(__file__).parent / txt_file # reading from the text file in the directory code is run from
         content = path.read_text(encoding="utf-8")
-        # content = open(txt_file).read().split("\n")
-        #vehicles_list = [line for line in content.splitlines()]
-        #[print(line) for line in vehicles_list]
-        # for line in vehicles_list:
-        #     key, value = line.strip().split(', ')
-        #     vehicles_dict[key] = value
         return {key: value for line in content.splitlines() for key, value in [line.strip().split(', ')]}
-
         #print(vehicles_dict)
     except FileNotFoundError:
         print('file not found')
@@ -41,9 +33,10 @@ def listSpeeders(filename_a, filename_b, speed_limit, distance):
             if(speed > speed_with_margin):
                 # print(f'{licence_plate} : {speed:.3f} km/h')
                 dict_speeders[licence_plate] = (float(format(speed, ".3f")),a_dict[licence_plate])
-                
-    #print(f'speeders: {dict_speeders}')
     return dict_speeders    
-if __name__ == "__main__":
-    lawbreakers = listSpeeders('box_a.txt','box_b.txt', SPEED_LIMIT, DISTANCE)
+
+
+# if __name__ == "__main__":
+#     lawbreakers = listSpeeders('box_a.txt','box_b.txt', SPEED_LIMIT, DISTANCE)
+#     print(f'speeders: {lawbreakers}')
     

@@ -1,5 +1,3 @@
-# This program creates a Car object, a Truck object,
-# and an SUV object
 import os.path
 import pickle
 import Vehicle
@@ -18,16 +16,16 @@ class Choice:
 def main():
     vehicle_list = []
     
-    if os.path.isfile('vehicles.dat'):
+    if os.path.isfile('vehicles.dat'): #CWD
         with open('vehicles.dat', 'rb') as file:
             vehicle_list = pickle.load(file)    
     else:
-        # A collection of vehicles to be written to file initially for testing purposes
+        # A collection of vehicles for testing purposes
         vehicle_list = [Vehicle.Car('BMW 320', 2001, 70000, 15000.0 , 4, 'FY99401'), 
                        Vehicle.Suv('Volvo XC60', '2010', ' 30000' , 18500.0, 5, 'TEST123'), 
                        Vehicle.Truck('Toyota RAV4', 2002, 40000, 12000.0, '4WD', 'TEST234')]
     
-    print("\nSome test vehicles:\n")
+    print("\nSome initial vehicles for testing:\n")
     for vehicle in vehicle_list:
         print(vehicle)
     
@@ -65,15 +63,14 @@ def switch(choice,vehicle_list):
             for vehicle in vehicle_list:
                 if vehicle.licence_plate in speeders_dict:
                     ticket = Vehicle.SpeedTicket(vehicle.licence_plate, speeders_dict[vehicle.licence_plate][1], speeders_dict[vehicle.licence_plate][0], Speeders.SPEED_LIMIT)
-                    #if ticket not in vehicle.tickets: #if speeding ticket not registred before
-                    vehicle.tickets = ticket # not need to check if it's registred before. Key in dictonary is unique
-                    print(f'{ticket} (__str__ in SpeedTicket class)')
+                    #if ticket not in vehicle.tickets: #No check needed because...
+                    vehicle.tickets = ticket #...key(date) in dictionary in Vehicle is unique
+                    #print(f'{ticket} (__str__ in SpeedTicket class)')
                     
             for v in vehicle_list:
                 if v.tickets:
-                    print('\n'.join(f'Date: {k}\t, Licence: {v} (datastructure in Vehicle)' \
+                    print('\n'.join(f'Date: {k}, Licence: {v[0]}, Speed: {v[1]}, Speed Limit: {v[2]}' \
                         for k, v in v.tickets.items())) # https://stackoverflow.com/questions/44689546/how-to-print-out-a-dictionary-nicely-in-python
-                    
                                             
         case Choice.QUIT:
             vehicle_collection_sorted = sorted(vehicle_list, key=lambda vehicle: vehicle.make, reverse=False)

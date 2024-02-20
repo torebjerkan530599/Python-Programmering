@@ -7,12 +7,6 @@ class Vehicle:
         self.__licence_plate = licence_plate
         self.__tickets = {}
     
-    # def get_tickets(self):
-    #     return self.__tickets
-    
-    # def set_ticket(self, ticket):
-    #     self.__tickets[ticket.date] = ticket.licence_plate
-    
     @property
     def make(self):
         return self.__make
@@ -53,17 +47,14 @@ class Vehicle:
     def _licence_plate(self, value):
         self.__licence_plate = value
 
-    #No idea how to make lists work with @property and @tickets.setter
     @property
     def tickets(self):
         return self.__tickets
 
     @tickets.setter
     def tickets(self, ticket):
-        self.__tickets[ticket.date] = ticket.licence_plate
-        
-    
-
+        #print(ticket.__str__())
+        self.__tickets[ticket.date] = (ticket.licence_plate,ticket.speed,ticket.speed_limit)
 
     def __str__(self) -> str:
         return f'Make: {self.__make} Model: {self.__model} Milage: {self.__mileage} Price: {self.__price} Registration: {self.__licence_plate}'
@@ -131,6 +122,15 @@ class SpeedTicket():
     @property
     def date(self):
         return self.__date
+
+    @property
+    def speed(self):
+        return self.__speed
+    
+    @property
+    def speed_limit(self):
+        return self.__speed_limit
+    
     
     def __str__(self):
         return f'\n***Speeding Ticket***\nLicence plate: {self.__license_plate}, Date: {self.__date}, Speed: {self.__speed}, Speed Limit: {self.__speed_limit}'
