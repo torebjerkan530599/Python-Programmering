@@ -108,3 +108,8 @@ print(party_size)
     
 # if __name__ == "__main__":
 #     fileToDictionary('box_a.txt')
+
+#coords = [(points[i],points[i+1]) for i in range(0,len(points)-1,2)]
+# for i in range(0,len(points)-1,2):
+#     tuple_element = (points[i],points[i+1])
+#     coords.append(tuple_element)

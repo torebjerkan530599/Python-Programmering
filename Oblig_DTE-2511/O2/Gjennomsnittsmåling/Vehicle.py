@@ -53,7 +53,6 @@ class Vehicle:
 
     @tickets.setter
     def tickets(self, ticket):
-        #print(ticket.__str__())
         self.__tickets[ticket.date] = (ticket.licence_plate,ticket.speed,ticket.speed_limit)
 
     def __str__(self) -> str:
@@ -135,7 +134,7 @@ class SpeedTicket():
     def __str__(self):
         return f'\n***Speeding Ticket***\nLicence plate: {self.__license_plate}, Date: {self.__date}, Speed: {self.__speed}, Speed Limit: {self.__speed_limit}'
     
-    def __repr__(self): # because get_tickets retuns a list of objects of type SpeedTicket()
+    def __repr__(self): # because Vehicle.tickets retuns a list of objects of type SpeedTicket()
         return self.__str__()
     
     

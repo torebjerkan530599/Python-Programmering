@@ -6,7 +6,6 @@ def fileToDictionary(txt_file) -> dict:
         path = Path(__file__).parent / txt_file # reading from the text file in the directory code is run from
         content = path.read_text(encoding="utf-8")
         return {key: value for line in content.splitlines() for key, value in [line.strip().split(', ')]}
-        #print(vehicles_dict)
     except FileNotFoundError:
         print('file not found')
 
@@ -31,12 +30,11 @@ def listSpeeders(filename_a, filename_b, speed_limit, distance):
             duration = datetime_object_b - datetime_object_a
             speed = (distance / duration.total_seconds()) * 3.6 # m/s to km/h
             if(speed > speed_with_margin):
-                # print(f'{licence_plate} : {speed:.3f} km/h')
                 dict_speeders[licence_plate] = (float(format(speed, ".3f")),a_dict[licence_plate])
     return dict_speeders    
 
 
-# if __name__ == "__main__":
-#     lawbreakers = listSpeeders('box_a.txt','box_b.txt', SPEED_LIMIT, DISTANCE)
-#     print(f'speeders: {lawbreakers}')
+if __name__ == "__main__":
+    lawbreakers = listSpeeders('box_a.txt','box_b.txt', SPEED_LIMIT, DISTANCE)
+    print(f'speeders: {lawbreakers}')
     
