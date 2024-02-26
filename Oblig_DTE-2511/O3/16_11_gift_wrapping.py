@@ -1,15 +1,6 @@
 import math
 import random 
 
-# for testing purposes: https://www.desmos.com/calculator/2bixtbca1d
-# sample = []
-# for i in range(0,5):
-#     random_float_tuple = (round(random.uniform(0,10),2),round(random.uniform(0,10),2))
-#     sample.append(random_float_tuple)
-
-# for t in sample:
-#     print(t)
-
 def which_side(x0, y0, x1, y1, x2, y2):
     return (x1 - x0) * (y2 - y0) - (x2 - x0) * (y1 - y0)
 
@@ -44,10 +35,11 @@ def getConvexHull(S):
     return H
 
 
-points = []
-points = [1, 2.4, 2.5, 2, 1.5, 34.5, 5.5, 6, 6, 2.4, 5.5, 9]
+#testing:
+#points = [1, 2.4, 2.5, 2, 1.5, 34.5, 5.5, 6, 6, 2.4, 5.5, 9]
 #coords = [(points[i],points[i+1]) for i in range(0,len(points)-1,2)]
 coords = [(2.13, 5.29),(4.83, 3.9), (9.16, 8.09),(7.08, 5.16), (0.57, 9.92), (1,1)]
 convex_hull = getConvexHull(coords)
 #convex_hull = getConvexHull(sample)
 print(convex_hull)
+
