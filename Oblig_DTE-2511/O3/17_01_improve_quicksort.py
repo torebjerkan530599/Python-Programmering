@@ -1,3 +1,5 @@
+import math
+
 def quickSort(lst):
     quickSortHelper(lst, 0, len(lst) - 1)
 
@@ -7,37 +9,26 @@ def quickSortHelper(lst, first, last):
         quickSortHelper(lst, first, pivotIndex - 1)
         quickSortHelper(lst, pivotIndex + 1, last)
 
+
+def compare_values(lst, x, y):
+    return x if lst[x] > lst[y] else y
+
 #median av tre: plukk ut første, siste og midterste i hver sin del-liste, sorter del-listene og bruk det midterste
-def select_median(lst) -> int:
-   lst_of_lst = []
-   last_index = 0
-   for i in range(len(lst)-4):
-       if i % 5 == 0:
-           lst_of_lst.append(lst[i:i+5])
-           last_index = i+5
-   
-   last_list = lst[last_index: len(lst)]
-   lst_of_lst.append(last_list)
-   
-   #print(f'All lists: {lst_of_lst}')
-   
-   medians = []
-   for t,l in enumerate(lst_of_lst):
-       l.sort()
-       index = len(l)//2
-       medians.append(l[index]) # kan pivot være flyttall?
-       #print(f'list {t+1}:{l} || index: {index} || median: {l[index]}') 
-   
-   medians.sort()
-   #print(f"medians: {medians}")
-   pivot = medians[len(medians)//2]
-   #print(f"pivot: {pivot}")
-   return pivot
+def select_median_of_three(lst,first,last) -> int:
+    # lst.sort() # nope, probably not gonna fly with the whomever correcting this assignment
+    #middle = math.floor((first+last)/2)
+    middle = len(lst)//2
+    
+    high_value = compare_values(lst, first, compare_values(lst, middle, last))
+    if(high_value == first): return compare_values(lst, middle, last)
+    if(high_value == last): return compare_values(lst, first, last)
+    return compare_values(lst, first, last)
         
 # Partition lst[first..last] 
+'''https://dev.to/smilesforgood/writing-a-median-of-three-pivot-helper-for-quicksort-289m'''
 def partition(lst, first, last):
     #pivot = lst[first]  # Choose the first element as the pivot
-    pivot = select_median(lst)# Choose median of medians as pivot
+    pivot = lst[select_median_of_three(lst,first,last)]# Choose median of medians as pivot
     low = first + 1  # Index for forward search
     high = last  # Index for backward search
 
@@ -68,11 +59,15 @@ def partition(lst, first, last):
 # A test function 
 def main():
     lst = [2, 7, 2, 5, 6, 1, -2, 3, 14, 12, 17,1]
+    #lst = [2, 22, 2, 5, -3]
     
-    #median av tre: plukk ut første, siste og midterste i hver sin del-liste, sorter del-listene og bruk det midterste
+    
     
     # lst_of_lst = [lst[i:i+5] for i in range(len(lst)-4) if i % 5 == 0]
     # last_index = [len(lst_of_lst[0]) + len(lst_of_lst[1])]
+    
+    # median av tre: plukk ut første, siste og midterste i hver sin del-liste, sorter del-listene og bruk det midterste
+    # concept code isolated from algorithm
     
     # lst_of_lst = []
     # last_index = 0
