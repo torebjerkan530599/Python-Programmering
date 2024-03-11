@@ -21,7 +21,7 @@ def getConvexHull(S):
                 continue
             
             d = direction(t0, t1, p)
-            if d < 0 or (d == 0 and math.dist(t0, t1) > math.dist(p, t1)):
+            if d > 0 or (d == 0 and math.dist(t0, t1) > math.dist(p, t1)):
                 t1 = p
         
         t0 = t1    
