@@ -153,9 +153,17 @@ class LinkedList:
 
     # Remove the element and return true if the element is in the list 
     def remove(self, e):
-        print("Implementation left as an exercise")
-        return True
-
+        current = self.__head 
+        for i in range(self.__size):
+            current = current.next
+            if(current.next.element == e):          
+                current.next = current.next.next
+                self.__size -= 1
+                return True
+            return False
+    
+    
+    
     # Return the element from this list at the specified index 
     def get(self, index):
         if index < 0 or index >= self.__size:
@@ -192,10 +200,23 @@ class LinkedList:
         return -1
 
     # Replace the element at the specified position in this list
-    #  with the specified element. */
+    #  with the specified element. */      
     def set(self, index, e):
-        print("Implementation left as an exercise")
-        return None
+        current = self.__head
+        prev = None
+        for i in range(self.__size):
+            if i == index:
+                new_node = Node(e)
+                if prev:
+                    prev.next = new_node
+                else:
+                    self.__head = new_node
+                new_node.next = current.next
+                del current
+                return True
+            prev = current
+            current = current.next
+        return False
     
     # Return elements via indexer
     def __getitem__(self, index):
@@ -249,11 +270,11 @@ def main():
     print()
     print(f'last occurence of \"{test_word}\" at index {linked_list.lastIndexOf(test_word)}')
 
-    # linked_list.remove("red")
-    # print("after invoking list1.remove('red'), list1 is", linked_list)
-    # index = int(input("Enter an index: "))
-    # linked_list.set(index, "orange")
-    # print("after invoking list1.set('" + str(index) + " , orange)", 
-    #     "list1 is", linked_list)
+    linked_list.remove('all')
+    print("after invoking linked_list.remove('all'), linked_list is", linked_list)
+    
+    index = 3
+    linked_list.set(index, "orange")
+    print("after invoking linked_list.set('" + str(index) + " , orange)", "linked_list is", linked_list)
     
 main()
