@@ -140,6 +140,7 @@ class LinkedList:
     # Clear the list */
     def clear(self):
         self.__head = self.__tail = None
+        self.__size = 0
 
     # Return true if this list contains the element o 
     def contains(self, e):
@@ -174,14 +175,21 @@ class LinkedList:
     # Return the index of the head matching element in this list.
     # Return -1 if no match.
     def indexOf(self, e):
-        print("Implementation left as an exercise")
-        return 0
+        current = self.__head
+        for i in range(self.__size):
+            if(current.element == e):
+                return i
+            current = current.next
+        return -1
 
     # Return the index of the last matching element in this list
     #  Return -1 if no match. 
     def lastIndexOf(self, e):
-        print("Implementation left as an exercise")
-        return 0
+        for i in range(self.__size,0,-1):
+            other_e = self.get(i)
+            if(other_e == e):
+                return i
+        return -1
 
     # Replace the element at the specified position in this list
     #  with the specified element. */
@@ -226,23 +234,21 @@ def main():
         linked_list.add(word)
     
     print(linked_list)
-    #list_iter = linked_list.__iter__()
-    
-    # for i in range(linked_list.getSize()):
-    #     print(list_iter.__next__())
         
     #test contains(e) function:
-    test_strings =["sweet","home","alabama"]
+    test_string =["sweet","home","alabama"]
     
-    for word in test_strings:
+    for word in test_string:
         print(f'It is {linked_list.contains(word)} that the linked list contains the word \"{word}\"')
 
     # test get from index method:
     print(f'{linked_list.get(3)} == time')
     
-    
-    #tests from https://liangpy.pearsoncmg.com/test/Exercise18_03.txt    
-    # print("list1.indexOf('time') is", linked_list.indexOf('time'))
+    test_word = "was"
+    print(f'first occurence of \"{test_word}\" at index {linked_list.indexOf(test_word)}')
+    print()
+    print(f'last occurence of \"{test_word}\" at index {linked_list.lastIndexOf(test_word)}')
+
     # linked_list.remove("red")
     # print("after invoking list1.remove('red'), list1 is", linked_list)
     # index = int(input("Enter an index: "))
