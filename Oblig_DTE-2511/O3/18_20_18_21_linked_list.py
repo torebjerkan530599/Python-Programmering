@@ -265,14 +265,17 @@ def main():
     # test get from index method:
     print(f'{linked_list.get(3)} == time')
     
+    # test indexing
     test_word = "was"
     print(f'first occurence of \"{test_word}\" at index {linked_list.indexOf(test_word)}')
     print()
     print(f'last occurence of \"{test_word}\" at index {linked_list.lastIndexOf(test_word)}')
 
+    # test remove
     linked_list.remove('all')
     print("after invoking linked_list.remove('all'), linked_list is", linked_list)
     
+    # test replacing a node with a new one at the specified index with the specified content
     index = 3
     linked_list.set(index, "orange")
     print("after invoking linked_list.set('" + str(index) + " , orange)", "linked_list is", linked_list)
