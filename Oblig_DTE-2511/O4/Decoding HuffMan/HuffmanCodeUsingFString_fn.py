@@ -1,8 +1,7 @@
 from Heap import Heap
 
 def main():
-    #text = input("Enter a text: ").strip()
-    text = "Mississippi"
+    text = input("Enter a text: ").strip() # test: text = "Mississippi"
     counts = getCharacterFrequency(text) # Count frequency
 
     print(f"{'ASCII Code':<14s} {'Character':<14s}",
