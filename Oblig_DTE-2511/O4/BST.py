@@ -174,3 +174,16 @@ class TreeNode:
         self.element = e
         self.left = None  # Point to the left node, default None
         self.right = None # Point to the right node, default None
+        
+if __name__ == "__main__":
+    tree = BST()
+    tree.insert("Gemma")
+    tree.insert("Margaux")
+    tree.insert("Thalia")
+    tree.insert("Aditya")
+    tree.insert("Jaspal")
+    tree.insert("Penny") # Insert Penny to tree
+    tree.insert("Darla")
+    
+    tree.delete("Penny")
+    tree.inorder()
