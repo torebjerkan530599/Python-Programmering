@@ -7,7 +7,7 @@ DEFAULT_MAX_LOAD_FACTOR = 0.75
 # Define the maximum hash-table size to be 2 ** 30
 MAXIMUM_CAPACITY = 2 ** 30 
   
-class Map:
+class LinearMap:
     def __init__(self, capacity = DEFAULT_INITIAL_CAPACITY, 
                  loadFactorThreshold = DEFAULT_MAX_LOAD_FACTOR):
         # Current hash-table capacity. Capacity is a power of 2
@@ -17,7 +17,7 @@ class Map:
         self.loadFactorThreshold = loadFactorThreshold
    
         # Create a list of empty buckets
-        self.table = [None for _ in range(self.capacity)] # assignment code
+        self.table = [None for _ in range(self.capacity)]
         
         self.size = 0 # Initialize map size
 
@@ -40,17 +40,16 @@ class Map:
  
     # Remove the entry for the specified key 
     def remove(self, key):
-        bucketIndex = self.getHash(hash(key))
-    
-        # Remove the first entry that matches the key from a bucket
-        if len(self.table[bucketIndex]) > 0:
-            bucket = self.table[bucketIndex]
-            for entry in bucket:
-                if entry[0] == key:
-                    bucket.remove(entry)
-                    self.size -= 1 # Decrease size
-                    break # Remove just one entry that matches the key
-
+        index = self.getHash(hash(key))
+        while self.table[index] != None and (self.table[index][0] == None \
+            or self.table[index][0] != key):
+            index = (index + 1) % self.capacity
+            
+        if self.table[index] != None and self.table[index][0] == key:
+            self.table[index] = None
+            self.size -1
+        
+                
     # Return true if the specified key is in the map
     def containsKey(self, key):
         if self.get(key) != None:
@@ -61,12 +60,8 @@ class Map:
     # Return true if this map contains the specified value 
     def containsValue(self, value):
         for i in range(self.capacity):
-            if len(self.table[i]) > 0:
-                bucket = self.table[i]
-                for entry in bucket:
-                    if entry[1] == value:
-                        return True
-    
+            if self.table[i] != None and self.table[i][1] == value: 
+                return True
         return False
   
     # Return a set of entries in the map 
@@ -75,55 +70,46 @@ class Map:
     
         for i in range(self.capacity):
             if self.table[i] != None:
-                bucket = self.table[i]
-                for entry in bucket:
-                    entries.append(entry)
+                entries.append( self.table[i])
+
         return tuple(entries)
     
     # Return the first value that matches the specified key 
     def get(self, key):
-        bucketIndex = self.getHash(hash(key))
-        if len(self.table[bucketIndex]) > 0:
-            bucket = self.table[bucketIndex]
-            for entry in bucket:
-                if entry[0] == key:
-                    return entry[1]
+        index = self.getHash(hash(key))
+        while self.table[index] != None:
+            if self.table[index][0] != None and self.table[index][0] == key:
+                return self.table[index][1]
+            index = (index + 1) % self.capacity
                 
         return None
   
     # Return all values for the specified key in this map
     def getAll(self, key):
         values = []
-        bucketIndex = self.getHash(hash(key))
-        if len(self.table[bucketIndex]) > 0:
-            bucket = self.table[bucketIndex]
-            for entry in bucket:
-                if entry[0] == key:
-                    values.append(entry[1])
-    
+        index = self.getHash(hash(key))
+        while self.table[index] != None:
+            if self.table[index][0] != None and self.table[index][0] == key:
+                values.append(self.table[index][1])
+            index = (index + 1) % self.capacity
+            
+        
         return tuple(values)
   
     # Return a set consisting of the keys in this map
     def keys(self):
         keys = []
-    
-        for i in range(0, self.capacity):
-            if len(self.table[i]) > 0:
-                bucket = self.table[i] 
-                for entry in bucket:
-                    keys.append(entry[0])
-    
+        for entry in self.table:
+            if entry:
+                keys.append(entry[0])
         return keys
   
     # Return a set consisting of the values in this map 
     def values(self):
         values = []
-    
-        for i in range(self.capacity):
-            if len(self.table[i]) > 0:
-                bucket = self.table[i] 
-                for entry in bucket:
-                    values.append(entry[1])
+        for entry in self.table:
+            if entry:
+                values.append(entry[1])
         return values
                   
     # Remove all of the entries from this map 
@@ -132,7 +118,7 @@ class Map:
         
         self.table = [] # Reset map
         for i in range(self.capacity):
-            self.table.append([])
+            self.table = [None for _ in range(self.capacity)] 
 
     # Return the number of mappings in this map 
     def getSize(self):
@@ -144,12 +130,11 @@ class Map:
     
     # Rehash the map 
     def rehash(self):
-        temp = self.items() # Get entries #TODO modify items()
+        temp = self.items() # Get entries
         self.capacity *= 2 # Double capacity    
         self.table = [] # Create a new hash table
         self.size = 0 # Clear size
-        for i in range(self.capacity):
-            self.table.append([])
+        self.table = [None for _ in range(self.capacity)]
             
         for entry in temp:
             self.put(entry[0], entry[1]) # Store to new table
