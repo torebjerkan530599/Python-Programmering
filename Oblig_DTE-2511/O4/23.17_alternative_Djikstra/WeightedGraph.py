@@ -23,7 +23,6 @@ class WeightedGraph(Graph):
 
         return self.neighbors
     
-    
     def getAdjacencyMatrix(self):
         num_vertices = len(self.vertices)
         adj_matrix = [[0] * num_vertices for _ in range(num_vertices)]
@@ -36,8 +35,10 @@ class WeightedGraph(Graph):
             adj_matrix[source][destination] = weight
 
         # Print the adjacency matrix
+        # print('Adjacency Matrix:')
         # for row in adj_matrix:
         #     print(row)
+             
         return adj_matrix
         
 
@@ -157,11 +158,49 @@ class WeightedGraph(Graph):
                         cost[v.v] = cost[u] + v.weight
                         parent[v.v] = u
         
+        # print(f'T: {T}')
+        print(f'cost getShortestPathAlternative: {cost}')
+        
         return ShortestPathTree(sourceVertex, parent, T, cost, 
             self.vertices)
         
     def getShortestPathWithAdjacencyMatrix(self,sourceVertex):
-        pass
+        adj_mat = self.getAdjacencyMatrix()
+        # cost[v] stores the cost of the path from v to the source
+        cost = self.getSize() * [INFINITY] # Initial cost to infinity
+        cost[sourceVertex] = 0 # Cost of source is 0
+
+        # parent[v] stores the previous vertex of v in the path
+        parent = self.getSize() * [-1]
+    
+        # T stores the vertices whose path found so far
+        visited = [] 
+        # Expand T
+        while len(visited) < self.getSize():
+            # Find smallest cost v in V - T 
+            u = -1 # Vertex to be determined
+            currentMinCost = INFINITY
+            for i in range(self.getSize()):
+                if i not in visited and cost[i] < currentMinCost:
+                    currentMinCost = cost[i]
+                    u = i
+
+            if u == -1:
+                break
+            else:
+                visited.append(u) # Add a new vertex to T
+        
+            # Update distances of adjacent vertices
+            for v in range(self.getSize()):
+                if v not in visited and adj_mat[u][v] != 0:
+                    if cost[u] + adj_mat[u][v] < cost[v]:
+                        cost[v] = cost[u] + adj_mat[u][v]
+                        parent[v] = u 
+
+        # Create a ShortestPathTree
+        #print(f'parents {parent}')
+        return ShortestPathTree(sourceVertex, parent, visited, cost, 
+            self.vertices)
     
 # MST is a subclass of Tree, defined in the preceding chapter
 class MST(Tree):
@@ -194,42 +233,41 @@ class ShortestPathTree(Tree):
             
 if __name__ == "__main__":
         
-    # vertices = ["Seattle", "San Francisco", "Los Angeles",
-    #       "Denver", "Kansas City", "Chicago", "Boston", "New York",
-    #       "Atlanta", "Miami", "Dallas", "Houston"]
+    vertices = ["Seattle", "San Francisco", "Los Angeles",
+          "Denver", "Kansas City", "Chicago", "Boston", "New York",
+          "Atlanta", "Miami", "Dallas", "Houston"]
 
-    # # Create edges
-    # edges = [
-    #       [0, 1, 807], [0, 3, 1331], [0, 5, 2097],
-    #       [1, 0, 807], [1, 2, 381], [1, 3, 1267],
-    #       [2, 1, 381], [2, 3, 1015], [2, 4, 1663], [2, 10, 1435],
-    #       [3, 0, 1331], [3, 1, 1267], [3, 2, 1015], [3, 4, 599], 
-    #         [3, 5, 1003],
-    #       [4, 2, 1663], [4, 3, 599], [4, 5, 533], [4, 7, 1260],
-    #         [4, 8, 864], [4, 10, 496],
-    #       [5, 0, 2097], [5, 3, 1003], [5, 4, 533], 
-    #         [5, 6, 983], [5, 7, 787],
-    #       [6, 5, 983], [6, 7, 214],
-    #       [7, 4, 1260], [7, 5, 787], [7, 6, 214], [7, 8, 888],
-    #       [8, 4, 864], [8, 7, 888], [8, 9, 661], 
-    #         [8, 10, 781], [8, 11, 810],
-    #       [9, 8, 661], [9, 11, 1187],
-    #       [10, 2, 1435], [10, 4, 496], [10, 8, 781], [10, 11, 239],
-    #       [11, 8, 810], [11, 9, 1187], [11, 10, 239]
-    #     ]
+    # Create edges
+    edges = [
+          [0, 1, 807], [0, 3, 1331], [0, 5, 2097],
+          [1, 0, 807], [1, 2, 381], [1, 3, 1267],
+          [2, 1, 381], [2, 3, 1015], [2, 4, 1663], [2, 10, 1435],
+          [3, 0, 1331], [3, 1, 1267], [3, 2, 1015], [3, 4, 599], 
+            [3, 5, 1003],
+          [4, 2, 1663], [4, 3, 599], [4, 5, 533], [4, 7, 1260],
+            [4, 8, 864], [4, 10, 496],
+          [5, 0, 2097], [5, 3, 1003], [5, 4, 533], 
+            [5, 6, 983], [5, 7, 787],
+          [6, 5, 983], [6, 7, 214],
+          [7, 4, 1260], [7, 5, 787], [7, 6, 214], [7, 8, 888],
+          [8, 4, 864], [8, 7, 888], [8, 9, 661], 
+            [8, 10, 781], [8, 11, 810],
+          [9, 8, 661], [9, 11, 1187],
+          [10, 2, 1435], [10, 4, 496], [10, 8, 781], [10, 11, 239],
+          [11, 8, 810], [11, 9, 1187], [11, 10, 239]
+        ]
     
-    # # Create a graph
-    # graph1 = WeightedGraph(vertices, edges)
+    # Create a graph
+    graph1 = WeightedGraph(vertices, edges)
 
-    # # Obtain a shortest path
-    # print("Original version of Dijkstras algortihm:")
-    # tree1 = graph1.getShortestPath(5) # Get shortest path from index 5
-    # tree1.printAllPaths()
-    # print()
-    # print("Alternative version of Dijkstras algortihm (***23.17):")
-    # tree_2 = graph1.getShortestPathAlternative(5)
-    # tree_2.printAllPaths()
-    # print()
+    # Obtain a shortest path
+    print("Original version of Dijkstras algortihm:")
+    tree1 = graph1.getShortestPath(5) # Get shortest path from index 5
+    tree1.printAllPaths()
+    print()
+    print("Dijkstra using adjacency matrix Liang 23.3")
+    tree_2 = graph1.getShortestPathWithAdjacencyMatrix(5)
+    tree_2.printAllPaths()
     vertices = [x for x in range(5)]
     edges = [
           [0, 1, 2], [0, 3, 8], 
@@ -238,30 +276,14 @@ if __name__ == "__main__":
           [3, 0, 8], [3, 1, 3], [3, 2, 4], [3, 4, 6],
           [4, 2, 5], [4, 3, 6]
         ]
-    # Initialize adjacency matrix with zeros
-    # num_vertices = len(vertices)
-    # adj_matrix = [[0] * num_vertices for _ in range(num_vertices)]
-
-    # # Populate the adjacency matrix
-    # for edge in edges:
-    #     source = edge[0]
-    #     destination = edge[1]
-    #     weight = edge[2]
-    #     adj_matrix[source][destination] = weight
-
-    # # Print the adjacency matrix
-    # for row in adj_matrix:
-    #     print(row)
-            
-
+    print()
+    print("Alternative version of Dijkstras algortihm (***23.17):")
     graph1 = WeightedGraph(vertices, edges)
-    graph1.getAdjacencyMatrix()
-
-    # print("Original version of Dijkstras algortihm:")
-    # tree_1 = graph1.getShortestPath(0)
-    # tree_1.printAllPaths()
-    # print()
-    # print("Alternative version of Dijkstras algortihm (***23.17):")
-    # tree_2 = graph1.getShortestPathAlternative(0)
-    # tree_2.printAllPaths()
-    # #graph1.getAdjacencyMatrix(vertices)
+    tree_1 = graph1.getShortestPathAlternative(0)
+    tree_1.printAllPaths()
+    
+    print()
+    print("Implemement Dijkstra using adjacency matrix Liang 23.3")
+    graph2 = WeightedGraph(vertices, edges)
+    tree_2 = graph2.getShortestPathWithAdjacencyMatrix(0)
+    tree_2.printAllPaths()
