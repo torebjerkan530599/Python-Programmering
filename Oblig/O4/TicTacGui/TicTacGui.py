@@ -114,6 +114,7 @@ class TicTacGui():
 
     def to1D(self,row, col):
         index = row * 3 + col # number of columns is 3
+        print(index)
         return index
 
 TicTacGui()

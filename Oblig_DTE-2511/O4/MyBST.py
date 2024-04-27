@@ -41,9 +41,13 @@ def main():
     
     iterator = iter(tree) # Create an iterator
     try:
-        while True:
-            print(next(iterator), end = ' ')
+       while True:
+           print(next(iterator), end = ' ')
     except StopIteration:
-        print("All traversed")
+       print("All traversed")
+    
+    print("Alternatively use a for loop: ", end = '')
+    for e in tree:
+        print(e, end=' ')
     
 main()
