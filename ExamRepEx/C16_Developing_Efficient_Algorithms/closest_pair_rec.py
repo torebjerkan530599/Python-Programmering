@@ -19,7 +19,7 @@ def closest_brute_force(points): # 9
 
 
 # den rekursive metoden
-def rec(xsorted, ysorted): # 2
+def rec(xsorted, ysorted): #2: rekursiv funksjon, deler opp problemet
     n = len(xsorted)
     if n <= 3:
         return closest_brute_force(xsorted) # 3
@@ -30,32 +30,32 @@ def rec(xsorted, ysorted): # 2
         ysorted_left = []
         ysorted_right = []
     
-    # 10
+    # 10: finn ut hvilke punkter, sortert etter Y som tilhører hver halvdel
     for point in ysorted: 
         if point[0] <= midpoint[0]:
             ysorted_left.append(point)  
         else:
             ysorted_right.append(point)
         
-    (p1_left, p2_left, delta_left) = rec(xsorted_left, ysorted_left) # 4
-    (p1_right, p2_right, delta_right) = rec(xsorted_right, ysorted_right) # 5
+    (p1_left, p2_left, delta_left) = rec(xsorted_left, ysorted_left) # 4:rekursive kall, vil til slutt fanges opp av base case
+    (p1_right, p2_right, delta_right) = rec(xsorted_right, ysorted_right)#5:rekursive kall, vil til slutt fanges opp av base case
     
     if delta_left <delta_right:
         (p1, p2, delta) = (p1_left, p2_left, delta_left)  
     else: 
-        (p1, p2, delta) = (p1_right, p2_right, delta_right) # 11
+        (p1, p2, delta) = (p1_right, p2_right, delta_right) #11: minste avstand mellom de to halvdelene velges 
     
-    in_band = [point for point in ysorted if midpoint[0]-delta < point[0] < midpoint[0]+delta] # 6
+    in_band = [point for point in ysorted if midpoint[0]-delta < point[0] < midpoint[0]+delta] #6: velg ut hvilke koordinater som ligger i «the strip»
 
-    for i in range(len(in_band)): # 7
+    for i in range(len(in_band)): #7: sjekk om det finnes punkter i «the strip» som danner en ny minste d
         for j in range(i+1, min(i+7, len(in_band))):
             d = dist(in_band[i], in_band[j])
             if d < delta:
                 #print(in_band[i], in_band[j])
                 (p1, p2, delta) = (in_band[i], in_band[j], d)
-    return p1, p2, delta # 8
+    return p1, p2, delta #8: returner resultat
 
-def closest(points): # 1
+def closest(points): #1: Sortering på X og Y koordinat, kall til rekursiv hjelperutine
     xsorted = sorted(points, key=lambda point: point[0])
     ysorted = sorted(points, key=lambda point: point[1])
     return rec(xsorted, ysorted)
