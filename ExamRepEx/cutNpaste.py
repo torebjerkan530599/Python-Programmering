@@ -1,30 +1,137 @@
-# Compute the distance between two points (x1, y1) and (x2, y2)
-# Brute force solution O(n2)
-def distance(x1, y1, x2, y2):
-    familiar_formula = ((x2 - x1) **2 + (y2 - y1) ** 2)**0.5
-    curriculum_formula = ((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)) ** 0.5
-    return ((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)) ** 0.5
-def nearest_points(points):
-# p1 and p2 are the indices in the points list
-    p1, p2 = 0, 1 # Initial two points
-    shortestDistance = distance(points[p1][0], points[p1][1],
-    points[p2][0], points[p2][1]) # Initialize shortestDistance
-    # Compute distance for every two points
-    for i in range(len(points)):
-        for j in range(i + 1, len(points)):
-            d = distance(points[i][0], points[i][1],
-            points[j][0], points[j][1]) # Find distance
-            
-            if shortestDistance > d:
-                p1, p2 = i, j # Update p1, p2
-                shortestDistance = d # New shortestDistance
-    return p1, p2, shortestDistance # Return p1, p2 and distance
-    
-def main():
-    points = [[5.2,2.4],[1.7,1.2],[4.1,2.6],[6.5,4.9], [4.3,3.5],[5.4,6.7],[2.6,4.1],[3.0,6.3],[1.7,3.2]]
-    p1, p2, dist = nearest_points(points)
-    print(f"The nearest points are \
-    {points[p1]} and {points[p2]}, with distance {dist:0.3f}")
+import math
 
-if __name__ == "__main__":
-    main()
+# Return the points that form a convex hull 
+def getConvexHull(p):   
+    # Step 1
+    placeP0(p)
+    
+    # Step 2
+    sort(p)
+    
+    p = discardTies(p); # If two points have the same angle, discard the one that is closer to p0
+    
+    if len(p) < 3:
+        return None
+    
+    stack = [p[0], p[1], p[2]] # We use a list for stack
+    
+    i = 3
+    while i < len(p):
+        t2 = stack[len(stack) - 1]
+        t1 = stack[len(stack) - 2]
+      
+        if whichSide(t1[0], t1[1], t2[0], t2[1], p[i][0], p[i][1]) <= 0: # on the right of the line from t1 to t2
+            # pop the top element off the stack
+            stack.pop()
+        else:
+            # push a new element to the stack
+            stack.append(p[i])
+            i += 1
+
+    return stack
+  
+# Return the rightmost lowest point in S 
+def getRightmostLowestPoint(p):
+    rightMostIndex = 0
+    rightMostX = p[0][0]
+    rightMostY = p[0][1]
+    
+    for i in range(1, len(p)):
+        if rightMostY > p[i][1]:
+            rightMostY = p[i][1]
+            rightMostX = p[i][0]
+            rightMostIndex = i
+        elif rightMostY == p[i][1] and rightMostX < p[i][0]:
+            rightMostX = p[i][0]
+            rightMostIndex = i   
+    
+    return p[rightMostIndex]
+  
+def distance(x1, y1, x2, y2):
+    return math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2))
+  
+# Is (x2, y2) on the right side of [x0, y0] and [x1, y1]  
+def whichSide(x0, y0, x1, y1, x2, y2):
+    return (x1 - x0) * (y2 - y0) - (x2 - x0) * (y1 - y0)
+
+    # https://www.youtube.com/watch?v=B2AJoQSZf4M
+    if area < 0: return 1
+    if area > 0: return -1
+    return 0
+
+# Place the rightmost lowest point as the first element in p 
+def placeP0(p):
+    rightMostIndex = 0
+    rightMostX = p[0][0]
+    rightMostY = p[0][1]
+    
+    for i in range(1, len(p)):
+        if rightMostY > p[i][1]:
+            rightMostY = p[i][1]
+            rightMostX = p[i][0]
+            rightMostIndex = i
+        elif rightMostY == p[i][1] and rightMostX < p[i][0]:
+            rightMostX = p[i][0]
+            rightMostIndex = i     
+    
+    # Swap p.get(rightMostIndex) with p[0]
+    if rightMostIndex != 0:
+        p[0], p[rightMostIndex] = p[rightMostIndex], p[0]
+
+# Sort points
+def sort(list):
+    for i in range(1, len(list) -1 ):
+        # Find the minimum in the list[i..len(list)-1]
+        currentMin = list[i]
+        currentMinIndex = i
+
+        for j in range(i + 1, len(list)):
+            if compareAngles(list[0][0], list[0][1], currentMin[0], currentMin[1], list[j][0], list[j][1]) < 0:
+                currentMin = list[j]
+                currentMinIndex = j
+
+        # Swap list[i] with list[currentMinIndex] if necessary;
+        if (currentMinIndex != i):
+            list[currentMinIndex] = list[i]
+            list[i] = currentMin
+
+# Compare two points' angles
+def compareAngles(x0, y0, x1, y1, x2, y2):
+    status = whichSide(x0, y0, x1, y1, x2, y2);        
+    if status > 0: # Left side of the line from rightMostLowestPoint to o
+        return 1
+    elif status == 0:
+        return 0
+    else:
+        return -1
+
+# If two points have the same angle, discard the one that is closer to p0
+def discardTies(p):
+    list = [p[0]]
+    
+    i = 1
+    while i < len(p):        
+        d = distance(p[0][0], p[0][1], p[i][0], p[i][1])
+        indexOfLargest = i
+        k = i + 1
+        while k < len(p) and compareAngles(p[0][0], p[0][1], p[i][0], p[i][1], p[k][0], p[k][1]) == 0:
+            if (d < distance(p[0][0], p[0][1], p[k][0], p[k][1])):
+                d = distance(p[0][0], p[0][1], p[k][0], p[k][1])
+                indexOfLargest = k
+
+            k += 1
+      
+        list.append(p[indexOfLargest])
+        i = k
+    
+    return list
+  
+coordinates = [[1.0, 1.0], [5.0, 2.0] , [4.0, 2.0], [6.0, 4.0], [4.0, 3.0], [5.0, 6.0], [2.0, 4.0], [3.0, 6.0], [1.0, 3.0]]
+
+lowest_point = max(coordinates, key= lambda point: point[1]) #possibly not the rightmost, but it works because it has the lowest y value and no other points at the same height
+coordinates[0],coordinates[1] = lowest_point,coordinates[0] 
+sort(coordinates)
+convexHull = getConvexHull(coordinates)
+  
+print("The convex hull is ")
+print(' '.join(f'{point}' for point in convexHull))

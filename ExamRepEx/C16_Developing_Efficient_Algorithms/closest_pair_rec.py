@@ -2,6 +2,11 @@ import math
 
 def dist(p1, p2):
     return math.sqrt(((p2[1]-p1[1])**2)+((p2[0]-p1[0])**2))
+    '''
+    other ways of calculating:
+    formula_1 = ((x2 - x1) **2 + (y2 - y1) ** 2)**0.5
+    formula_2 = ((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)) ** 0.5
+    '''
 
 def closest_brute_force(points): # 9
     min_dist = float("inf")
@@ -30,7 +35,7 @@ def rec(xsorted, ysorted): #2: rekursiv funksjon, deler opp problemet
         ysorted_left = []
         ysorted_right = []
     
-    # 10: finn ut hvilke punkter, sortert etter Y som tilhører hver halvdel
+    #10: finn ut hvilke punkter, sortert etter Y som tilhører hver halvdel
     for point in ysorted: 
         if point[0] <= midpoint[0]:
             ysorted_left.append(point)  
@@ -40,14 +45,17 @@ def rec(xsorted, ysorted): #2: rekursiv funksjon, deler opp problemet
     (p1_left, p2_left, delta_left) = rec(xsorted_left, ysorted_left) # 4:rekursive kall, vil til slutt fanges opp av base case
     (p1_right, p2_right, delta_right) = rec(xsorted_right, ysorted_right)#5:rekursive kall, vil til slutt fanges opp av base case
     
+    #11: minste avstand mellom de to halvdelene velges 
     if delta_left <delta_right:
         (p1, p2, delta) = (p1_left, p2_left, delta_left)  
     else: 
-        (p1, p2, delta) = (p1_right, p2_right, delta_right) #11: minste avstand mellom de to halvdelene velges 
+        (p1, p2, delta) = (p1_right, p2_right, delta_right) 
     
-    in_band = [point for point in ysorted if midpoint[0]-delta < point[0] < midpoint[0]+delta] #6: velg ut hvilke koordinater som ligger i «the strip»
+    #6: velg ut hvilke koordinater som ligger i «the strip»
+    in_band = [point for point in ysorted if midpoint[0]-delta < point[0] < midpoint[0]+delta] 
 
-    for i in range(len(in_band)): #7: sjekk om det finnes punkter i «the strip» som danner en ny minste d
+    #7: sjekk om det finnes punkter i «the strip» som danner en ny minste d
+    for i in range(len(in_band)): 
         for j in range(i+1, min(i+7, len(in_band))):
             d = dist(in_band[i], in_band[j])
             if d < delta:
