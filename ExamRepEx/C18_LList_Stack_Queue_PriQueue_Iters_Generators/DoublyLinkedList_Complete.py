@@ -65,6 +65,7 @@ class LinkedList:
             current.next.prev = current
             #print(current.next.prev.element)
             (current.next).next = temp
+            temp.prev = current.next
             self.__size += 1
 
     # Remove the head node and
@@ -75,6 +76,7 @@ class LinkedList:
         else:
             temp = self.__head # Keep the first node temporarily
             self.__head = self.__head.next # Move head to point the next node
+            self.__head.prev = None
             self.__size -= 1 # Reduce size by 1
             if self.__head == None: 
                 self.__tail = None # List becomes empty 
@@ -117,10 +119,12 @@ class LinkedList:
     
             for i in range(1, index):
                 previous = previous.next
-            current = previous.next
-            previous.next = current.next
+            previous.next = previous.next.next
+            previous.next.prev = previous
+            # current = previous.next
+            # previous.next = current.next
             self.__size -= 1
-            return current.element
+            return previous.element#current.element
 
     # Return true if the list is empty
     def isEmpty(self):
@@ -230,12 +234,14 @@ class LinkedList:
         for i in range(self.__size):
             if i == index:
                 new_node = Node(e)
+                new_node.next = current.next # let new node point to the node after the node to be replaced
                 if prev:
                     prev.next = new_node
+                    new_node.prev = prev
                 else:
                     self.__head = new_node
-                new_node.next = current.next
-                new_node.prev = prev # doubly linked list
+                    
+                new_node.next.prev = new_node # let previous pointer of the new node's next pointer point back to the new node
                 del current
                 return True
             prev = current
@@ -307,21 +313,21 @@ def main():
     print("after invoking linked_list.remove('all'), linked_list is", linked_list)
     
     # # test replacing a node with a new one at the specified index with the specified content
-    # index = 0
-    # linked_list.set(index, "Once")
-    # print("after invoking linked_list.set('" + str(index) + " , \"Once\")", "linked_list is", linked_list)
+    index = 0
+    linked_list.set(index, "Once")
+    print("after invoking linked_list.set('" + str(index) + " , \"Once\")", "linked_list is", linked_list)
     
     # #test replacing a node with a new one at the specified index with the specified content
-    # index = 5
-    # linked_list.set(index, "nothing")
-    # print("after invoking linked_list.set('" + str(index) + " , \"nothing\")", "linked_list is", linked_list)
+    index = 5
+    linked_list.set(index, "nothing")
+    print("after invoking linked_list.set('" + str(index) + " , \"nothing\")", "linked_list is", linked_list)
     
-    # linked_list.insert(3, 'Brother')
-    # linked_list.insert(linked_list.getSize(), 'Dandy')
-    # print(linked_list)
+    linked_list.insert(3, 'Brother')
+    linked_list.insert(linked_list.getSize(), 'Innebandy')
+    print(linked_list)
     
-    # linked_list.removeAt(3)
-    # print(linked_list)
+    linked_list.removeAt(4) # remove 'time'
+    print(linked_list)
     
     last = linked_list.get_last()
     print(last.element, end = ' ')
