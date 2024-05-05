@@ -204,11 +204,11 @@ class LinkedList:
     # Replace the element at the specified position in this list
     #  with the specified element. */      
     def set(self, index, e):
-        new_node = Node(e)
         current = self.__head
         prev = None
         for i in range(self.__size):
             if i == index:
+                new_node = Node(e)
                 if prev:
                     prev.next = new_node
                 else:
