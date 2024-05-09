@@ -20,7 +20,7 @@ for word in text:
 
 # option 1: make upper and lower-case appear next to eachother
 sorted_list = list(word_dict.keys())
-sorted_list.sort(key=lambda initial:initial.lower())
+sorted_list.sort(key=lambda initial:initial.upper())
 sorted_dict = {i: word_dict[i] for i in sorted_list}
 
 # option 2: print all uppercase first then all lowercase
