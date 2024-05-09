@@ -66,4 +66,5 @@ if __name__ == "__main__":
     print(f'The perimeter is {triangle.getPerimeter()}')
     print(f'Color is  {triangle.getColor()}')
     print(f'Filled is {triangle.isFilled()}')
+    print(triangle)
     
