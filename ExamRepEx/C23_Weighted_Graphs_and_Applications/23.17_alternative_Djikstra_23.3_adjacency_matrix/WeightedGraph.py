@@ -84,8 +84,8 @@ class WeightedGraph(Graph):
             # Find smallest cost v in V - T 
             u = -1 # Vertex to be determined
             currentMinCost = INFINITY
-            for i in range(self.getSize()):
-                if i not in T and cost[i] < currentMinCost:
+            for i in range(self.getSize()): # search cost table for least cost if not already in T
+                if i not in T and cost[i] < currentMinCost: 
                     currentMinCost = cost[i]
                     u = i
                     
@@ -97,10 +97,12 @@ class WeightedGraph(Graph):
 
             # Adjust cost[v] for v that is adjacent to u and v in V - T
             for e in self.neighbors[u]:
-                if e.v not in T and cost[e.v] > e.weight:
-                    cost[e.v] = e.weight
+                if e.v not in T and cost[e.v] > e.weight: # e.weight er foretrukket om cost[e.v] er større*
+                    cost[e.v] = e.weight #*
                     parent[e.v] = u 
-                    
+        # print(f'cost: {cost}')
+        # print(f'parents: {parent}')
+        # print(f'T: {T}')
         return MST(startingVertex, parent, T, totalWeight, 
             self.vertices)
 
@@ -136,7 +138,9 @@ class WeightedGraph(Graph):
                 if e.v not in T and cost[e.v] > cost[u] + e.weight: # kost[parent] + vekt til e
                     cost[e.v] = cost[u] + e.weight
                     parent[e.v] = u 
-        
+        # print(f'cost: {cost}')
+        # print(f'parents: {parent}')
+        # print(f'T: {T}')        
         # Create a ShortestPathTree
         return ShortestPathTree(sourceVertex, parent, T, cost, 
             self.vertices)
@@ -287,3 +291,22 @@ if __name__ == "__main__":
     graph2 = WeightedGraph(vertices, edges)
     tree_2 = graph2.getShortestPathWithAdjacencyMatrix(0)
     tree_2.printAllPaths()
+    
+    vertices = ['A','B','C','D','E','F','G'] # ['A'=0,'B'=1,'C'=2,'D'=3,'E'=4,'F'=5,'G'=6] 
+    edges = [
+        [0,1,4],[0,2,1],[0,5,10],
+        [1,3,3],[1,0,4],[1,2,2],
+        [2,1,2],[2,0,1],[2,5,8],[2,4,6],[2,6,5],
+        [3,1,3],[3,4,7],
+        [4,2,6],[4,3,7],[4,6,12],
+        [5,0,10],[5,2,8],[5,6,9],
+        [6,2,5],[6,4,12],[6,5,9]
+        ]
+    # print()
+    graph3 = WeightedGraph(vertices,edges)
+    # tree_3 = graph3.getMinimumSpanningTree(0)
+    # tree_3.printTree()
+    tree_4 = graph3.getShortestPath(0)
+    tree_4.printAllPaths() 
+    
+    
