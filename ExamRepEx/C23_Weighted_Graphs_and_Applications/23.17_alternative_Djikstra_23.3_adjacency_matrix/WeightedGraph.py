@@ -167,7 +167,8 @@ class WeightedGraph(Graph):
         
         return ShortestPathTree(sourceVertex, parent, T, cost, 
             self.vertices)
-        
+    
+    # assignment 23.3
     def getShortestPathWithAdjacencyMatrix(self,sourceVertex):
         adj_mat = self.getAdjacencyMatrix()
         # cost[v] stores the cost of the path from v to the source

@@ -1,11 +1,8 @@
 from tkinter import * # Import tkinter
 
-
-
 class DisplayGraph(Canvas):
     def __init__(self, container, width = 800, height = 450):
         super().__init__(container, width = width, height = height)
-        self.graph = []
         self.vertices = {}
         self.edges = {}
         self.size = 0
@@ -16,7 +13,6 @@ class DisplayGraph(Canvas):
                 u, x, y = map(int, parts[:3])
                 self.vertices[u] = (x, y)
                 self.edges[u] = list(map(int, parts[3:])) # essentially an adjacency list
-                #self.graph.append(list(map(int,line.split())))
         
 
         self.drawGraph()
