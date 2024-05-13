@@ -43,7 +43,7 @@ program = TSD(None)
 squared_numbers = [program.square(x) for x in range(10) if program.square(x) < 50] # x itself won't work for filtering numbers
 print(squared_numbers)
 
-# dictionary comprehension
+# Mapping states with their capitals with using dictionary comprehension
 pairs = [("a",1), ("b",2), ("c",2)] # a list of tuples
 my_dict = {k:v for k,v in pairs} # converting the list of tuples to a dictionary comprehension
 print(my_dict)
@@ -52,6 +52,14 @@ print(my_dict)
 nums = [1,2,2,3,3,3,4,4,4,4,4,4]
 unique_nums_set = {x ** 2 for x in nums}
 print((unique_nums_set))
+
+state = ['Gujarat', 'Maharashtra', 'Rajasthan']
+capital = ['Gandhinagar', 'Mumbai', 'Jaipur']
+dict_using_comp = {key:value for (key, value) in zip(state, capital)}
+   
+print("Output Dictionary using dictionary comprehensions:", 
+                                           dict_using_comp)
+
 
 # Generator comprehension 
 sum_of_squares = sum(x**2 for x in range(1000000)) # using a generator avoids the need to generate all values in advance, which is heavy on memory
