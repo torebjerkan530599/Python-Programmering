@@ -34,21 +34,31 @@ print("The edges for graph1: ")
 graph1.printWeightedEdges()
 
 #23.10
-previous_u = 0
-string = ' '
-skip_pipe = False
-with open('graph.txt','w') as file:
-  file.write(f'{graph1.getSize()}\n')
-  for i,row in enumerate(edges):
-      if previous_u != row[0]:
-        skip_pipe = True 
-        file.write('\n')
-      u, v, w = row[0:3]
-      previous_u = u
-      if u < v:
-        string = f'{u},{v},{w} | '
-        file.write(string)        
-        #if skip_pipe:           
+# previous_u = 0
+# with open('graph.txt','w') as file:
+#   file.write(f'{graph1.getSize()}\n')
+#   for i,row in enumerate(edges):
+#       if previous_u != row[0]:
+#         file.write('\n')
+#       u, v, w = row[0:3]
+#       previous_u = u
+#       if u < v:
+#         string = f'{u},{v},{w}'
+#         if i%3 < len(row) - 1:  # To prevent adding '|' at the end of the last line
+#           string += ' |'
+#         file.write(string + ' ')
+
+with open('graph.txt', 'w') as file:
+    file.write(f'{graph1.getSize()}\n')
+    for i, row in enumerate(edges):
+        u, v, w = row[0:3]
+        if(u < v):
+          file.write(f'{u}, {v}, {w}')
+          if row[0] != edges[i + 1][0]:
+              file.write('\n')
+          else:
+              file.write(' | ')
+
       
       
          

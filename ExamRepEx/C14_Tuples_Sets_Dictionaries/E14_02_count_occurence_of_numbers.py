@@ -12,7 +12,7 @@ test_list = [9, 4, 5, 4, 4, 5, 9, 5, 4]
 # printing original list
 print ("Original list solution 2: " + str(test_list))
  
-# using list comprehension to get most frequent element
+# using max with set and lambda
 res = max(set(test_list), key = lambda x: test_list.count(x))
  
 # printing result

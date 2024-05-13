@@ -100,12 +100,13 @@ class WeightedGraph(Graph):
                 if e.v not in T and cost[e.v] > e.weight: # e.weight er foretrukket om cost[e.v] er større*
                     cost[e.v] = e.weight #*
                     parent[e.v] = u 
-        # print(f'cost: {cost}')
-        # print(f'parents: {parent}')
-        # print(f'T: {T}')
+        print(f'cost: {cost}')
+        print(f'parents: {parent}')
+        print(f'T: {T}')
         return MST(startingVertex, parent, T, totalWeight, 
             self.vertices)
-        
+    
+    # Liang 23.2
     def getMinimumSpanningTreeWithMatrix(self, startingVertex = 0):
         adj_mat = self.getAdjacencyMatrix()
         # cost[v] stores the cost by adding v to the tree
@@ -136,12 +137,12 @@ class WeightedGraph(Graph):
             # Update distances of adjacent vertices
             for v in range(self.getSize()):
                 if v not in T and adj_mat[u][v] != 0:
-                    if cost[u] < cost[v]:
-                        cost[v] = cost[u]
+                    if adj_mat[u][v] < cost[v]:
+                        cost[v] = adj_mat[u][v]
                         parent[v] = u 
-        # print(f'cost: {cost}')
-        # print(f'parents: {parent}')
-        # print(f'T: {T}')
+        print(f'cost: {cost}')
+        print(f'parents: {parent}')
+        print(f'T: {T}')
         return MST(startingVertex, parent, T, totalWeight, 
             self.vertices)
 
@@ -345,9 +346,11 @@ if __name__ == "__main__":
         ]
     # print()
     graph3 = WeightedGraph(vertices,edges)
-    # tree_3 = graph3.getMinimumSpanningTree(0)
+  
     # tree_3.printTree()
     tree_4 = graph3.getShortestPath(0)
     tree_4.printAllPaths() 
     
+    tree_3 = graph3.getMinimumSpanningTree(0)
+    tree_3 = graph3.getMinimumSpanningTreeWithMatrix(0)
     
