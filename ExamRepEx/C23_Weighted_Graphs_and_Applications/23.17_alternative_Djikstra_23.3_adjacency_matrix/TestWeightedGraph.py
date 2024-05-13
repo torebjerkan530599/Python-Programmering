@@ -34,14 +34,21 @@ print("The edges for graph1: ")
 graph1.printWeightedEdges()
 
 #23.10
+previous_u = 0
+string = ' '
+skip_pipe = False
 with open('graph.txt','w') as file:
   file.write(f'{graph1.getSize()}\n')
   for i,row in enumerate(edges):
+      if previous_u != row[0]:
+        skip_pipe = True 
+        file.write('\n')
       u, v, w = row[0:3]
+      previous_u = u
       if u < v:
-        file.write(f' {u},{v},{w} ')
-      if i % 3 == 0:
-          file.write('\n')
+        string = f'{u},{v},{w} | '
+        file.write(string)        
+        #if skip_pipe:           
       
       
          
