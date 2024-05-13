@@ -105,6 +105,46 @@ class WeightedGraph(Graph):
         # print(f'T: {T}')
         return MST(startingVertex, parent, T, totalWeight, 
             self.vertices)
+        
+    def getMinimumSpanningTreeWithMatrix(self, startingVertex = 0):
+        adj_mat = self.getAdjacencyMatrix()
+        # cost[v] stores the cost by adding v to the tree
+        cost = self.getSize() * [INFINITY]
+        cost[startingVertex] = 0 # Cost of source is 0
+
+        parent = self.getSize() * [-1] # Parent of a vertex
+        totalWeight = 0; # Total weight of the tree thus far
+
+        T = []
+    
+        # Expand T
+        while len(T) < self.getSize():
+            # Find smallest cost v in V - T 
+            u = -1 # Vertex to be determined
+            currentMinCost = INFINITY
+            for i in range(self.getSize()): # search cost table for least cost if not already in T
+                if i not in T and cost[i] < currentMinCost: 
+                    currentMinCost = cost[i]
+                    u = i
+                    
+            if u == -1:
+                break
+            else:
+                T.append(u) # Add a new vertex to T
+            totalWeight += cost[u] # Add cost[u] to the tree
+
+            # Update distances of adjacent vertices
+            for v in range(self.getSize()):
+                if v not in T and adj_mat[u][v] != 0:
+                    if cost[u] < cost[v]:
+                        cost[v] = cost[u]
+                        parent[v] = u 
+        # print(f'cost: {cost}')
+        # print(f'parents: {parent}')
+        # print(f'T: {T}')
+        return MST(startingVertex, parent, T, totalWeight, 
+            self.vertices)
+
 
     # Find single source shortest paths 
     def getShortestPath(self, sourceVertex):
