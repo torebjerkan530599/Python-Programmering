@@ -18,7 +18,6 @@ with open('test.txt','r') as file:
 
     index = random.randint(0,len(words)-1)
     word = words[index]
-    print(len(word))
 
 
 word_dict = {k: v for k,v in enumerate(word)}
@@ -28,12 +27,12 @@ mask = ['*'] * len(word)
 print('Each time you guess a correct letter you get a free try!')
 print(*mask)
 
-print(len(word))
+#print(len(word))
 tries = len(word)
 
 for k,v in word_dict.items():
-    print(f'Tries left: {tries}')    
-    letter = input('guess a letter in the secret word:')
+    print(f'Tries left: {tries-k}')    
+    letter = input('guess a letter in the secret word: ')
     if letter in word_dict.values():
         k = k+1
         for i in range(len(word)):
@@ -42,12 +41,12 @@ for k,v in word_dict.items():
         if ' '.join(mask) == word:
             print("Congratulations!!")
             break
-    else:
-        tries = tries - 1
-    if tries == 0:
+        
+    if k == len(word)-1:
         print('You gonna hang!')
         break
 
     
     print(*mask)
+print('word was: ' + word)
 
