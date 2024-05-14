@@ -121,17 +121,30 @@ val_of_max = d[max_key]
 students = {"111-34-3434":"Ashley", "132-56-6290":"Gabriel"}
 print("111-34-3434" in students)
 print("111-34-3434" not in students)
-d1 = {"red":41, "blue":3}
-d2 = {"blue":3, "red":41}
+
 print(f'student keys: {students.keys()}') # will print dict_keys(['111-34-3434', '132-56-6290'])
 print(f'student keys: {tuple(students.keys())}')  # will print ('111-34-3434', '132-56-6290')
 print(tuple(students.values()))
 print(tuple(students.items()))
+
 students.clear() # to empty the dictionary
 # to test if two dictionaries are equal, other comparasion operators are not allowed
+d1 = {"red":41, "blue":3}
+d2 = {"blue":3, "red":41}
+
+
 print(d1 == d2)
 print(d2 != d2)
 
+# Create a dictionary that maps each element of two lists to eachother.
+l1 = [1,2,3,4] 
+l2 = ['A','B','C']
+dict1 = dict(zip(l1, l2)) # any number of entries greater than the number of entries in the other list, will be excluded. In this case 4 in l1
+print(f'dict1 is {dict1}')
+
+# Create a dictionary named squares that maps the first n counting numbers to their squares.
+n = 10
+squares = {i: i**2 for i in range(1,n+1)} # dictionary comprehension
 
 # reverse the values in a dictionary
 inverse = {}
