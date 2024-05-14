@@ -1,4 +1,4 @@
-from FindGene import GeneFinder  # The code to test
+from Oblig.O4.TestGeneFinder.find_gene import GeneFinder  # The code to test
 import unittest   # The test framework
 
 class Test_genome(unittest.TestCase):

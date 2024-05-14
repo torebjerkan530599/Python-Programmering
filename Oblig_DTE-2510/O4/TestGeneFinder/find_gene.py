@@ -5,6 +5,17 @@ Jeg gjorde først om koden til en funksjon som jeg puttet i en klasse og fulgte 
 Deretter oppdaget jeg i en av testene at jeg ikke kontrollerer om input kun benytter tegnene 'A','T','C' og'G'
 Tilføyde derfor en kontroll først i funksjonen som undersøker om det forekommer irrelevante tegn 
 
+# some sequences for testing
+# genome = "TTATGTTTTAAGGATGGGGCGTTAGTT" 
+# genome = "TGTGTGTATAT"
+# genome = "TCCACGATTGAATGGTTGTCTTTCCC"
+# genome = "AATGGTGTGACATGTAAACACATTATGXXX"
+
+# O2: Liang 5.6extra
+# generate random DNA sequence : https://molbiotools.com/randomsequencegenerator.php
+
+# Gene should have a terminating codone(TAG, TAA, TGA)
+
 '''
 
 class GeneFinder:
