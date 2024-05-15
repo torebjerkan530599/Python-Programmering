@@ -33,7 +33,7 @@ def whichSide(x0, y0, x1, y1, x2, y2):
     return (x1 - x0) * (y2 - y0) - (x2 - x0) * (y1 - y0)
 
 # Sort points
-def sort(list):
+def sort(list): #Sort by angle from the horizontal line through first point
     for i in range(1, len(list) -1 ):
         # Find the minimum in the list[i..len(list)-1]
         currentMin = list[i]
@@ -76,7 +76,7 @@ lowest_point = min(coordinates, key= lambda point: point[1]) #possibly not the r
 # placeP0(coordinates)
 coordinates[0],coordinates[1] = lowest_point,coordinates[0]
 #step 2
-sort(coordinates) # NB sorting starts from index 1, not touching coordinates[0]
+#sort(coordinates) # NB sorting starts from index 1, not touching coordinates[0]
 convexHull = getConvexHull(coordinates) 
 
 print("The convex hull is ")
