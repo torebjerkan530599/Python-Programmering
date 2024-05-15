@@ -70,7 +70,7 @@ def discardTies(p):
     
     return list
   
-coordinates = [[5.0, 2.0], [1.0, 1.0], [2.0, 1.0], [4.0, 2.0], [6.0, 4.0], [4.0, 3.0] ,[5.0, 6.0], [2.0, 4.0], [3.0, 6.0], [1.0, 3.0]]
+coordinates = [[5.0, 2.0], [1.0, 1.0], [4.0, 2.0], [6.0, 4.0], [4.0, 3.0] ,[5.0, 6.0], [2.0, 4.0], [3.0, 6.0], [1.0, 3.0]]
 lowest_point = min(coordinates, key= lambda point: point[1]) #possibly not the rightmost
 # Step 1, place lowest point first
 # placeP0(coordinates)

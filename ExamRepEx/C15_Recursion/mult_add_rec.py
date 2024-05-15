@@ -9,12 +9,19 @@ def mult_as_add_iter(op1:int,op2:int)-> int:
         
 
 
+# Not tail recursive
+# def mult_as_add_rec(op1:int,op2:int)-> int:
+#     if op2 == 1:
+#         return op1
+#     else:
+#         return op1 +  mult_as_add_rec(op1, op2 - 1)
 
+#tail recursive
 def mult_as_add_rec(op1:int,op2:int)-> int:
-    if op2 == 1:
+    if op2 == 2:
         return op1
     else:
-        return op1 +  mult_as_add_rec(op1, op2 - 1)
+        return mult_as_add_rec(op1 + op1, op2 - 1)
         
 
 print(mult_as_add_rec(6,4))

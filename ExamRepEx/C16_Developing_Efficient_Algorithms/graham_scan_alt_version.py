@@ -33,6 +33,20 @@ class ConvexHullGrahamScan:
 	
 
 if __name__ == "__main__":
-    points = [(2, 2), (-2, 3), (1, 1)]
-    hull = ConvexHullGrahamScan(points)
+    #coordinates = [(2, 2), (-2, 3), (1, 1)]
+    coordinates = [[5.0, 2.0], [1.0, 1.0] ,[4.0, 2.0], [6.0, 4.0], [4.0, 3.0] ,[5.0, 6.0], [2.0, 4.0], [3.0, 6.0], [1.0, 3.0]]
+    hull = ConvexHullGrahamScan(coordinates)
     print(f'Graham Scan: {hull.scan()}')
+    
+    
+#     coordinates = [[5.0, 2.0], [1.0, 1.0], [2.0, 1.0], [4.0, 2.0], [6.0, 4.0], [4.0, 3.0] ,[5.0, 6.0], [2.0, 4.0], [3.0, 6.0], [1.0, 3.0]]
+#     lowest_point = min(coordinates, key= lambda point: point[1]) #possibly not the rightmost
+#     # Step 1, place lowest point first
+#     # placeP0(coordinates)
+#     coordinates[0],coordinates[1] = lowest_point,coordinates[0]
+#     #step 2
+#     sort(coordinates) # NB sorting starts from index 1, not touching coordinates[0]
+#     convexHull = getConvexHull(coordinates) 
+
+# print("The convex hull is ")
+# print(' '.join(f'{point}' for point in convexHull)) # .replace('[','(').replace(']',')')

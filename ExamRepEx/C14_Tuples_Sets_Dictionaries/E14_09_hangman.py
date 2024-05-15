@@ -29,20 +29,19 @@ print(*mask)
 
 #print(len(word))
 tries = len(word)
-
+print('word is: ' + word)
 for k,v in word_dict.items():
     print(f'Tries left: {tries-k}')    
     letter = input('guess a letter in the secret word: ')
     if letter in word_dict.values():
-        k = k+1
         for i in range(len(word)):
             if word_dict[i] == letter:
                 mask[i] = letter
-        if ' '.join(mask) == word:
+        if ''.join(mask) == word:
             print("Congratulations!!")
             break
         
-    if k == len(word)-1:
+    if k == len(word):
         print('You gonna hang!')
         break
 
