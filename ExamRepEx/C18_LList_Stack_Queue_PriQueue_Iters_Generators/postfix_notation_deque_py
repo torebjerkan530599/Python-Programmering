@@ -1,0 +1,37 @@
+from collections import deque
+
+def evaluate_expression(expression):
+    operand_stack = deque()
+
+    # Extract operands and operators
+    tokens = expression.split()
+
+    # Phase 1: Scan tokens
+    for token in tokens:
+        token = token.strip()  # Extract a token
+        if not token:  # Blank space
+            continue  # Back to the loop to extract the next token
+        elif token in {'+', '-', '*', '/'}:
+            process_operator(token, operand_stack)
+        else:  # An operand scanned
+            operand_stack.append(int(token))
+
+    # Return the result
+    return str(operand_stack.pop())
+
+def process_operator(op, operand_stack):
+    op2 = operand_stack.pop()
+    op1 = operand_stack.pop()
+    if op == '+':
+        operand_stack.append(op1 + op2)
+    elif op == '-':
+        operand_stack.append(op1 - op2)
+    elif op == '*':
+        operand_stack.append(op1 * op2)
+    elif op == '/':
+        operand_stack.append(op1 / op2)
+
+# Example usage:
+expression = "5 3 2 * +"
+result = evaluate_expression(expression)
+print("Result:", result)

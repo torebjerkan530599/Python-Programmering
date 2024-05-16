@@ -1,4 +1,4 @@
-from LinkedList import LinkedList
+from Ex_01_LinkedList import LinkedList
 
 class Queue:
     def __init__(self):

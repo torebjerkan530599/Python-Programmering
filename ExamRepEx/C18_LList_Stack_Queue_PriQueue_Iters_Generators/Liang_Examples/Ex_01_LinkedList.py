@@ -182,6 +182,19 @@ class LinkedList:
     def __iter__(self):
         return LinkedListIterator(self.__head)
     
+    # Alternatively use a generator:
+    #def __iter__(self):
+    #    return self.linkedListGenerator()
+    #
+    #def linkedListGenerator(self):
+    #    current = self.__head
+    #    
+    #    while current != None:
+    #        element = current.element
+    #        current = current.next
+    #        yield current
+    
+    
 # The Node class
 class Node:
     def __init__(self, e):

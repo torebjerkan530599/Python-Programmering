@@ -1,7 +1,7 @@
 from tkinter import * # Import tkinter
 import tkinter.messagebox
-from BST import BST 
-from BTView import BTView
+from Ex_03_BST import BST 
+from Ex_05_BTView import BTView
     
 class BSTAnimation:
     def __init__(self, tree):

@@ -1,4 +1,4 @@
-from PriorityQueue import PriorityQueue
+from Ex_11_PriorityQueue import PriorityQueue
 
 patient1 = [2, "John"]
 patient2 = [1, "Jim"]

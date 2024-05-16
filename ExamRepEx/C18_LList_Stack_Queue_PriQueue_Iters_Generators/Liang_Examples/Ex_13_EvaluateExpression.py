@@ -1,4 +1,4 @@
-import Stack
+import Ex_07_Stack
 
 def main():
     expression = input("Enter an expression: ").strip()
@@ -10,10 +10,10 @@ def main():
 # Evaluate an expression 
 def evaluateExpression(expression):
     # Create operandStack to store operands
-    operandStack = Stack.Stack()
+    operandStack = Ex_07_Stack.Stack()
   
     # Create operatorStack to store operators
-    operatorStack = Stack.Stack()
+    operatorStack = Ex_07_Stack.Stack()
   
     # Insert blanks around (, ), +, -, /, and *
     expression = insertBlanks(expression)

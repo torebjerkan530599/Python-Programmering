@@ -1,5 +1,5 @@
 from tkinter import * # Import tkinter
-from BST import BST 
+from Ex_03_BST import BST 
 
 class BTView(Canvas):
     # Construct a view for the tree

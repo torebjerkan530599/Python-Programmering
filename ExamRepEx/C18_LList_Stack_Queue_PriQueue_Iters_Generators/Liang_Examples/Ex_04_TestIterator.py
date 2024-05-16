@@ -1,4 +1,4 @@
-from LinkedList import LinkedList
+from Ex_01_LinkedList import LinkedList
 
 lst = LinkedList() # Create a linked list
 lst.add(1) 
@@ -15,4 +15,4 @@ print(next(iterator))
 print(next(iterator))
 print(next(iterator))
 print(next(iterator))
-#print(next(iterator)) # Throws an exeption
+print(next(iterator))

@@ -8,9 +8,7 @@ def bubbleSort(lst):
         for i in range(len(lst) - k): 
             if lst[i] > lst[i + 1]:
                 # swap lst[i] with lst[i + 1]
-                temp = lst[i]
-                lst[i] = lst[i + 1]
-                lst[i + 1] = temp
+                lst[i + 1],lst[i] = lst[i], lst[i + 1]
           
                 needNextPass = True # Next pass still needed
 

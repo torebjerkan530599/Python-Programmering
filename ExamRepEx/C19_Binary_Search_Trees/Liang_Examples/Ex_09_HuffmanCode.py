@@ -1,69 +1,21 @@
 from Heap import Heap
 
 def main():
-    #text = input("Enter a text: ").strip() # test: text = "Mississippi"
-    text = "Mississippi"
-    counts,ascii_index = getCharacterFrequency(text) # Count frequency
-    print(ascii_index)
+    text = input("Enter a text: ").strip()
+    
+    counts = getCharacterFrequency(text) # Count frequency
 
-    print(f"{'ASCII Code':<14s} {'Character':<14s}",
-          f"{'Frequency':<14s} {'Code':<14s}")  
+    print("{0:<15s}{1:<15s}{2:<15s}{3:<15s}".format(
+        "ASCII Code", "Character", "Frequency", "Code"))  
     
     tree = getHuffmanTree(counts) # Create a Huffman tree
     codes = getCode(tree.root) # Get codes
-    
-    codes_dict = {}
-    #for i in range(len(codes)):
-        #if counts[i] != 0: # (char)i is not in text if counts[i] is 0
-    for i in ascii_index:
-        print(f"{i:<14d} {chr(i):<14s}",f"{counts[i]:<14d} {codes[i]:<14s}")
-
-        codes_dict[codes[i]] = chr(i)
-    print(codes_dict)
-    bit_pattern = [
-        huff_code for char in text 
-        for huff_code,letter in codes_dict.items() 
-        if letter == char]
-
-    # bit_pattern = []
-
-    # for char in text:
-    #     for huff_code, letter in codes_dict.items():
-    #         if letter == char:
-    #             bit_pattern.append(huff_code)
-
-    
-    print(f'encoded bit pattern: {bit_pattern}')
-    decoded = decode(bit_pattern, tree)
-    print(f'decoded bit pattern: {decoded}')
-
-def decode(bit_pattern, tree):
-    decoded_text = ""
-    root = tree.root
-    for bits in bit_pattern:
-        count = len(bits)
-        tree = root
-        for c,bit in enumerate(bits):
-            if c < count:
-                if bit=='0':
-                    tree = tree.left
-                if bit=='1':
-                    tree = tree.right
-        decoded_text += tree.element
-    return decoded_text
-'''
-A better way:
-    for d in bit_pattern:
-        if d == '0':
-            current = current.left
-        else:
-            current = current.right
-        if current.left == None and current.right == None: # Leaf node, fetch char
-            result += current.element
-            current = tree.root
-    return result 
-'''  
-
+        
+    for i in range(len(codes)):
+        if counts[i] != 0: # (char)i is not in text if counts[i] is 0
+            print("{0:<15d}{1:<15s}{2:<15d}{3:<15s}".format(
+                i, chr(i), counts[i], codes[i]))
+  
 # Get Huffman codes for the characters 
 # This method is called once after a Huffman tree is built
 def getCode(root):
@@ -102,13 +54,11 @@ def getHuffmanTree(counts):
 # Get the frequency of the characters 
 def getCharacterFrequency(text):
     counts = 128 * [0] # 128 ASCII characters
-    indexes = set()
     
     for i in range(len(text)):
         counts[ord(text[i])] += 1 # Count the characters in text
-        indexes.add(ord(text[i]))
     
-    return counts,indexes
+    return counts
   
 # Define a Huffman coding tree 
 class Tree:
