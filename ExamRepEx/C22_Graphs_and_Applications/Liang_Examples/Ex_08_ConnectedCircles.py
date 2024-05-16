@@ -1,5 +1,5 @@
 from tkinter import * # Import tkinter
-from Graph import Graph
+from Ex_02_Graph import Graph
 
 def add(event):
     circles.append([event.x, event.y])

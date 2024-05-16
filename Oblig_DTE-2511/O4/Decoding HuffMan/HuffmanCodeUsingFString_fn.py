@@ -15,7 +15,7 @@ def main():
         if counts[i] != 0: # (char)i is not in text if counts[i] is 0
             print(f"{i:<14d} {chr(i):<14s}",
                   f"{counts[i]:<14d} {codes[i]:<14s}")
-            codes_dict[codes[i]] = chr(i) 
+            codes_dict[codes[i]] = chr(i) # code - char
     bit_pattern = [ k for c in text for k,v in codes_dict.items() if v == c]
     print(f'encoded bit pattern: {bit_pattern}')
     decoded = decode(bit_pattern, tree)

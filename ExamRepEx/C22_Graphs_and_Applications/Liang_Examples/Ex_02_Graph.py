@@ -53,8 +53,8 @@ class Graph:
 
     # Clear graph 
     def clear(self):
-        self.vertices = []
-        self.neighbors = []
+        vertices = []
+        neighbors = []
   
     # Add a vertex to the graph   
     def addVertex(self, vertex):
