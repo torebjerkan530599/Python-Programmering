@@ -1,4 +1,5 @@
 import heapq
+from pathlib import Path
 
 class Graph:
     def __init__(self, size):
@@ -47,14 +48,14 @@ def read_graph_from_file(file_path):
     return graph
 
 def main():
-    file_url = input("Enter the URL of the file: ")
+    # file_url = input("Enter the URL of the file: ")
     source = int(input("Enter the source vertex: "))
     destination = int(input("Enter the destination vertex: "))
 
     # Download the file from the URL
-    import urllib.request
-    local_file, headers = urllib.request.urlretrieve(file_url)
-    
+    #import urllib.request
+    #local_file, headers = urllib.request.urlretrieve(file_url)
+    local_file = Path(__file__).parent / 'weighted_graph.txt'
     graph = read_graph_from_file(local_file)
     shortest_path = graph.get_shortest_path(source, destination)
 
