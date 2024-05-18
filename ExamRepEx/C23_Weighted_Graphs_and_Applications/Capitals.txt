@@ -1,0 +1,12 @@
+Amsterdam,Athens,2873
+Amsterdam,Berlin,667
+Amsterdam,Brussels,212
+Athens,Berlin,2045
+Athens,Brussels,3027
+Berlin,Brussels,651
+Berlin,Paris,1050
+Brussels,Paris,316
+Paris,Madrid,1053
+Madrid,Lisbon,624
+Paris,Lisbon,1731
+Amsterdam,Paris,500
