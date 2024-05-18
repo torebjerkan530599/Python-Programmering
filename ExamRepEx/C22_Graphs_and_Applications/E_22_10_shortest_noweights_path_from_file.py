@@ -1,157 +1,89 @@
 from pathlib import Path
 from queue import Queue
-import heapq
-import sys
 
+# Define the Graph class
 class Graph:
     def __init__(self, vertices=[], edges=[]):
         self.vertices = vertices
         self.neighbors = self.getAdjacencyLists(edges)
 
+    # Return a list of adjacency lists for edges 
     def getAdjacencyLists(self, edges):
         neighbors = [[] for _ in range(len(self.vertices))]
-        for u, *v in edges:  # Using *v to capture all remaining values after u
-            u = int(u)
-            for vertex in v:
-                v = int(vertex)
-                neighbors[u].append(Edge(u, v))
-                neighbors[v].append(Edge(v, u))  # For undirected graph
+
+        for i, edge_list in enumerate(edges):
+            for v in edge_list:
+                neighbors[i].append(v)
+
         return neighbors
-
-    # Other methods remain the same
-
-    def dijkstra_shortest_path(self, start, end):
-        # Initialize distances and visited array
-        distances = [float('inf')] * len(self.vertices)
-        distances[start] = 0
-        visited = [False] * len(self.vertices)
-
-        # Initialize a priority queue for Dijkstra's algorithm
-        pq = []
-        heapq.heappush(pq, (0, start))
-
-        while pq:
-            dist_u, u = heapq.heappop(pq)
-            visited[u] = True
-
-            if u == end:
-                break
-
-            for edge in self.neighbors[u]:
-                v = edge.v
-                if not visited[v]:
-                    new_dist = distances[u] + 1  # Since the graph is unweighted
-                    if new_dist < distances[v]:
-                        distances[v] = new_dist
-                        heapq.heappush(pq, (new_dist, v))
-
-        # Reconstruct the path
-        path = []
-        if distances[end] != float('inf'):
-            current = end
-            while current != start:
-                path.append(current)
-                for edge in self.neighbors[current]:
-                    if distances[edge.u] == distances[current] - 1:
-                        current = edge.u
-                        break
-            path.append(start)
-            path.reverse()
-
-        return path
     
-# The Edge class for defining an edge from u to v        
-class Edge:
-    def __init__(self, u, v):
-        self.u = u
-        self.v = v
+    # Return the number of vertices in the graph 
+    def getSize(self):
+        return len(self.vertices)
 
-# Example usage:
-if __name__ == "__main__":
-    # Read the graph from file
-    #filename = input("Enter the name of the file: ")
+    # Return the vertices in the graph 
+    def getVertices(self):
+        return self.vertices
+
+    # Return the neighbors of vertex with the specified index 
+    def getNeighbors(self, index):
+        return self.neighbors[index]
+
+# Function to find the shortest path between two vertices
+def shortest_path(graph, start, end):
+    if start not in graph.vertices or end not in graph.vertices:
+        return "Invalid vertices"
+
+    queue = Queue()
+    visited = set()
+    parent = {}
+
+    queue.put(start)
+    visited.add(start)
+    parent[start] = None
+
+    while not queue.empty():
+        current = queue.get()
+
+        if current == end:
+            # Reconstruct the path
+            path = [end]
+            while parent[end] is not None:
+                end = parent[end]
+                path.append(end)
+            return " -> ".join(map(str, reversed(path)))
+
+        for neighbor in graph.getNeighbors(current):
+            if neighbor not in visited:
+                queue.put(neighbor)
+                visited.add(neighbor)
+                parent[neighbor] = current
+
+    return "No path found"
+# Main function to prompt user input and find the shortest path
+def main():
+    #filename = input("Enter the name of the file containing the graph: ")
     filename = Path(__file__).parent / 'connected_graph.txt'
     with open(filename, 'r') as file:
-        num_vertices = int(file.readline())
-        edges = [list(map(int, line.split())) for line in file]
+        num_vertices = int(file.readline().strip())
+        edges = [list(map(int, line.split()))[1:] for line in file]
 
-    # Create the graph
-    vertices = list(range(num_vertices))
-    graph = Graph(vertices, edges)
-
-    # Prompt user for two vertices
-    start_vertex = int(input("Enter the start vertex: "))
-    end_vertex = int(input("Enter the end vertex: "))
-
-    # Find shortest path
-    shortest_path = graph.dijkstra_shortest_path(start_vertex, end_vertex)
-    if shortest_path:
-        print("Shortest path from", start_vertex, "to", end_vertex, ":", shortest_path)
-    else:
-        print("There is no path from", start_vertex, "to", end_vertex)
-
-'''
-import heapq
-from pathlib import Path
-
-class Graph:
-    def __init__(self, size):
-        self.size = size
-        self.adjacency_list = [[] for _ in range(size)]
+    graph = Graph(list(range(num_vertices)), edges)
     
-    def add_edge(self, u, v, weight=1):
-        self.adjacency_list[u].append((v, weight))
-        self.adjacency_list[v].append((u, weight))
+    
+        # Print vertices and edges
+    print("The number of vertices is", num_vertices)
+    for u in range(num_vertices):
+        print(u, "(" + str(u) + "):", end=" ")
+        for v in graph.getNeighbors(u):
+            print("(" + str(u) + ", " + str(v) + ")", end=" ")
+        print()
 
-    def get_shortest_path(self, source, destination):
-        INFINITY = float('inf')
-        cost = [INFINITY] * self.size
-        cost[source] = 0
-        parent = [-1] * self.size
-        min_heap = [(0, source)]
+    start = int(input("Enter the starting vertex: "))
+    end = int(input("Enter the ending vertex: "))
 
-        while min_heap:
-            current_cost, u = heapq.heappop(min_heap)
-            if u == destination:
-                break
-
-            for v, weight in self.adjacency_list[u]:
-                if cost[v] > current_cost + weight:
-                    cost[v] = current_cost + weight
-                    parent[v] = u
-                    heapq.heappush(min_heap, (cost[v], v))
-                    
-
-        path = []
-        current = destination
-        while current != -1:
-            path.append(current)
-            current = parent[current]
-        path.reverse()
-        return path
-
-def read_graph_from_file(file_path):
-    with open(file_path, 'r') as file:
-        size = int(file.readline().strip())
-        graph = Graph(size)
-        for line in file:
-            edges = line.strip().split(' ')
-            u = int(edges[0])
-            for v in map(int, edges[1:]):
-                graph.add_edge(u, v)
-    return graph
-
-def main():
-    file_path = input("Enter the path to the file containing the graph: ")
-    source = int(input("Enter the source vertex: "))
-    destination = int(input("Enter the destination vertex: "))
-
-    graph = read_graph_from_file(file_path)
-    shortest_path = graph.get_shortest_path(source, destination)
-
-    print("The shortest path between {} and {} is: {}".format(source, destination, ' '.join(map(str, shortest_path))))
+    shortest = shortest_path(graph, start, end)
+    print("Shortest path:", shortest)
 
 if __name__ == "__main__":
     main()
-
-'''
