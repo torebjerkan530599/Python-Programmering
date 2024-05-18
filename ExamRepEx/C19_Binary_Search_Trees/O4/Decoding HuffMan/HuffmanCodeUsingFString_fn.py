@@ -1,8 +1,12 @@
+from pathlib import Path
 from Heap import Heap
 
 def main():
+    file_path = Path(__file__).parent / 'missisippi.txt'
+    with open(file_path,'r') as file:
+        text = file.read()
     #text = input("Enter a text: ").strip() # test: text = "Mississippi"
-    text = "Mississippi"
+    #text = "Mississippi"
     counts,ascii_index = getCharacterFrequency(text) # Count frequency
     print(ascii_index)
 
