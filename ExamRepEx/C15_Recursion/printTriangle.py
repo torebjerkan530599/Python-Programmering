@@ -9,6 +9,7 @@ def printStars(x):
 
 def printTriangle(y):
     if y <= 0:
+        print('Blast off!')
         return
     else:
         printStars(y)
