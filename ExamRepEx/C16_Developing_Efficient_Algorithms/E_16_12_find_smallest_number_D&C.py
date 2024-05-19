@@ -1,5 +1,12 @@
 # O(n)
 
+# T(n)=2T(n/2) + O(1) = O(n)
+'''
+Divide Step: The list is split into two halves, which takes O(1) time.
+Conquer Step: Two recursive calls are made on lists of size n/2.
+Combine Step: Comparing the two smallest numbers takes O(1) time
+'''
+
 def find_smallest_divide_and_conquer(arr):
     # Base case: if the list contains only one element, return that element
     if len(arr) == 1:
