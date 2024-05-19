@@ -27,6 +27,7 @@ def main():
 
     s = input("Enter integers in one line for tree separated by comma: ")
     # 50,30,70,20,40,60,80,10,35,65
+    # 50 30 70 20 40 60 80 10 35 65
     lst = [int(x) for x in s.split(',')]
     for e in lst:
         tree.insert(e)
