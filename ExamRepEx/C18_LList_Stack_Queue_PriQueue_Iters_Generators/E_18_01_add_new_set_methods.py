@@ -4,9 +4,11 @@ class LinkedList:
         self.__tail = None
         self.__size = 0
 
-    #return head and tail element:
-    def get_last(self):
-        return self.__tail
+    def getHead(self):
+        if self.__size == 0:
+            return None
+        else:
+            return self.__head
 
     # Return the head element in the list 
     def getFirst(self):
@@ -35,37 +37,33 @@ class LinkedList:
     # Add an element to the end of the list 
     def addLast(self, e):
         newNode = Node(e) # Create a new node for e
-    
+
         if self.__tail == None:
             self.__head = self.__tail = newNode # The only node in list
         else:
-            newNode.prev = self.__tail # point to the previously known last node
             self.__tail.next = newNode # Link the new with the last node
             self.__tail = self.__tail.next # tail now points to the last node
-    
+
         self.__size += 1 # Increase size
+
 
     # Same as addLast 
     def add(self, e):
         self.addLast(e)
 
     # Insert a new element at the specified index in this list
-    # The index of the head element is 0 
     def insert(self, index, e):
         if index == 0:
-            self.addFirst(e) # Insert first
+            self.addFirst(e)
         elif index >= self.__size:
-            self.addLast(e) # Insert last
-        else: # Insert in the middle
+            self.addLast(e)
+        else:
             current = self.__head
             for i in range(1, index):
                 current = current.next
             temp = current.next
             current.next = Node(e)
-            current.next.prev = current
-            #print(current.next.prev.element)
-            (current.next).next = temp
-            temp.prev = current.next
+            current.next.next = temp
             self.__size += 1
 
     # Remove the head node and
@@ -76,7 +74,6 @@ class LinkedList:
         else:
             temp = self.__head # Keep the first node temporarily
             self.__head = self.__head.next # Move head to point the next node
-            self.__head.prev = None
             self.__size -= 1 # Reduce size by 1
             if self.__head == None: 
                 self.__tail = None # List becomes empty 
@@ -97,11 +94,10 @@ class LinkedList:
         
             for i in range(self.__size - 2):
                 current = current.next
-
+        
             temp = self.__tail
             self.__tail = current
             self.__tail.next = None
-            # Do I need to update the prev pointer, prev pointer was inserted when adding elements? No!
             self.__size -= 1
             return temp.element
 
@@ -119,12 +115,11 @@ class LinkedList:
     
             for i in range(1, index):
                 previous = previous.next
-            previous.next = previous.next.next
-            previous.next.prev = previous
-            # current = previous.next
-            # previous.next = current.next
+        
+            current = previous.next
+            previous.next = current.next
             self.__size -= 1
-            return previous.element#current.element
+            return current.element
 
     # Return true if the list is empty
     def isEmpty(self):
@@ -148,10 +143,12 @@ class LinkedList:
 
         return result
 
+
     # Clear the list */
     def clear(self):
         self.__head = self.__tail = None
         self.__size = 0
+
 
     # Return true if this list contains the element o 
     def contains(self, e):
@@ -164,43 +161,35 @@ class LinkedList:
 
     # Remove the element and return true if the element is in the list 
     def remove(self, e):
+        if self.__head is None:
+            return False  # List is empty
+        
         if(self.__head.element == e):
-            return self.removeFirst()      
+            return self.removeFirst() 
+             
         current = self.__head 
-        for i in range(self.__size):
-            current = current.next
-            #print(f'current: {current.element}')
+        while current.next is not None:
             if(current.next.element == e):          
                 current.next = current.next.next
-                current.next.prev = current
                 self.__size -= 1
                 return True
+            current = current.next
         return False
-    
+
     # Return the element from this list at the specified index 
     def get(self, index):
         if index < 0 or index >= self.__size:
             return None # Out of range
         elif index == 0:
             return self.__head.element # return head 
-        elif index == self.__size:
+        elif index == self.__size - 1:
             return self.__tail.element # return tail
-        elif index <= self.__size // 2: # search first half from beginning
-        #else:
+        else:
             current = self.__head
             for i in range(1, index+1):
                 current = current.next
                 if( i == index):
                     return current.element
-        elif index > self.__size // 2: # search last half backwards
-            current = self.__tail
-            for i in range(self.__size-1, index-1, -1):
-                if( i == index):
-                    #print(i)
-                    #print("success")
-                    return current.element
-                current = current.prev # doubly linked
-                #print(current.element)
         return None
                 
     # Return the index of the head matching element in this list.
@@ -212,42 +201,34 @@ class LinkedList:
                 return i
             current = current.next
         return -1
-
-    # Return the index of the last matching element in this list
-    #  Return -1 if no match. 
-    def lastIndexOf(self, e):
-        current = self.__tail
-        for i in range(self.__size -1,0,-1):
-            if(current.element == e):
-                print('index: ' + str(i))
-                return i
-            current = current.prev
-        return -1
-
-
-
-    # Replace the element at the specified position in this list
-    #  with the specified element. */      
-    def set(self, index, e):
-        current = self.__head
-        prev = None
-        for i in range(self.__size):
-            if i == index:
-                new_node = Node(e)
-                new_node.next = current.next # let new node point to the node after the node to be replaced
-                if prev:
-                    prev.next = new_node
-                    new_node.prev = prev
-                else:
-                    self.__head = new_node
-                    
-                new_node.next.prev = new_node # let previous pointer of the new node's next pointer point back to the new node
-                del current
-                return True
-            prev = current
-            current = current.next
-        return False
     
+    # Last index of the specified element in this list
+    def lastIndexOf(self, e):
+        index = -1
+        current = self.__head
+        for i in range(self.__size):
+            if current.element == e:
+                index = i
+            current = current.next
+        return index
+
+    # Set the element at the specified position in this list
+    def set(self, index, e):
+        if index < 0 or index >= self.__size:
+            return False  # Index out of range
+        elif index == 0:
+            new_node = Node(e)
+            new_node.next = self.__head.next
+            self.__head = new_node
+            return True
+        else:
+            current = self.__head
+            for i in range(index):
+                current = current.next
+            current.element = e
+            return True
+
+
     # Return elements via indexer
     def __getitem__(self, index):
         return self.get(index)
@@ -255,7 +236,6 @@ class LinkedList:
     # Return an iterator for a linked list
     def __iter__(self):
         return LinkedListIterator(self.__head)
-    
 
 
 # The Node class
@@ -263,7 +243,6 @@ class Node:
     def __init__(self, e):
         self.element = e
         self.next = None
-        self.prev = None
 
 class LinkedListIterator: 
     def __init__(self, head):
@@ -275,67 +254,72 @@ class LinkedListIterator:
         else:
             element = self.current.element
             self.current = self.current.next
-            return element
-        
+            return element    
 
 
+
+class MyLinkedList(LinkedList):
+    # Add the elements in otherList to this list. 
+    # Return True if this list changed as a result of the call 
+    def addAll(self, otherList):
+        changed = False
+        current = otherList.getHead()
+        while current is not None:
+            #if not self.contains(current.element):  # Add only if element does not exist
+                self.addLast(current.element)
+                changed = True
+                current = current.next
+        return changed
+
+    def removeAll(self, otherList):
+        changed = False
+        current = otherList.getHead()
+        while current is not None:
+            while self.contains(current.element):  # Remove all occurrences
+                self.remove(current.element)
+                changed = True
+            current = current.next
+        return changed
+
+    def retainAll(self, otherList):
+        changed = False
+        current = self.getHead()
+        while current is not None:
+            if not otherList.contains(current.element):  
+                while self.contains(current.element):  # Remove all occurrences
+                    self.remove(current.element)
+                    changed = True
+            current = current.next
+        return changed
+
+
+
+# Test code
 def main():
-    linked_list = LinkedList()
-    text_string = "There was a time when everything was all sweet and dandy"
-    text_array = text_string.split()
     
-    #add words in text_array to linked_list
-    for word in text_array:
-        linked_list.add(word)
+    lista = ['red', 'green', 'red', 'black' ]#input("Enter list1: ").split()
+    listb = ['red', 'black', 'yellow']#input("Enter list2: ").split() 
     
-    print(linked_list)
-        
-    #test contains(e) function:
-    test_string =["sweet","home","alabama"]
+    list1 = MyLinkedList()
+    list2 = MyLinkedList()
+    for s in lista:
+        list1.add(s)
+    for s in listb:
+        list2.add(s)
     
-    # for word in test_string:
-    #     print(f'It is {linked_list.contains(word)} that the linked list contains the word \"{word}\"')
+    list1.addAll(list2)
+    print("After list1.addAll(list2), list1 is", list1)
+    
+    list1 = MyLinkedList()
+    for s in lista:
+        list1.add(s)
+    list1.removeAll(list2)
+    print("After list1.removeAll(list2), list1 is", list1)
 
-    #test get from index method:
-    print(f'testing get(3): {linked_list.get(3)} == time')
-    print(f'testing get(6): {linked_list.get(6)} == was')
-    
-    #test indexing
-    test_word = "was"
-    print(f'first occurence of \"{test_word}\" at index {linked_list.indexOf(test_word)}')
-    print(f'last occurence of \"{test_word}\" at index {linked_list.lastIndexOf(test_word)}')
-
-    #test remove
-    linked_list.remove('everything')
-    print(linked_list)
-    print("after invoking linked_list.remove('dandy'), linked_list is", linked_list)
-    linked_list.remove('all')
-    print("after invoking linked_list.remove('all'), linked_list is", linked_list)
-    
-    # # test replacing a node with a new one at the specified index with the specified content
-    index = 0
-    linked_list.set(index, "Once")
-    print("after invoking linked_list.set('" + str(index) + " , \"Once\")", "linked_list is", linked_list)
-    
-    # #test replacing a node with a new one at the specified index with the specified content
-    index = 5
-    linked_list.set(index, "nothing")
-    print("after invoking linked_list.set('" + str(index) + " , \"nothing\")", "linked_list is", linked_list)
-    
-    linked_list.insert(3, 'Brother')
-    linked_list.insert(linked_list.getSize(), 'Innebandy')
-    print(linked_list)
-    
-    linked_list.removeAt(4) # remove 'time'
-    print(linked_list)
-    
-    last = linked_list.get_last()
-    print(last.element, end = ' ')
-    for i in range(linked_list.getSize()): # NB: -1, printing last element first 
-        if last.prev != None:
-            last = last.prev
-            print(last.element, end = ' ')
-        
-            
+    list1 = MyLinkedList()
+    for s in lista:
+        list1.add(s)
+    list1.retainAll(list2)
+    print("After list1.retainAll(list2), list1 is", list1)
     
 main()

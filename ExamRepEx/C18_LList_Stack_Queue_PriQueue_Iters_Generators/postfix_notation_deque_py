@@ -32,6 +32,6 @@ def process_operator(op, operand_stack):
         operand_stack.append(op1 / op2)
 
 # Example usage:
-expression = "5 3 2 * +"
+expression = "5 3 * 2  +"
 result = evaluate_expression(expression)
 print("Result:", result)
