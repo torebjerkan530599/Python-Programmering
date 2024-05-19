@@ -13,6 +13,7 @@ def heapSort(lst):
   
 def main():
     lst = [-44, -5, -3, 3, 3, 1, -4, 0, 1, 2, 4, 5, 53]
+    lst = [1, 2.4, 2.5, 2, 1.5, 34.5, 5.5, 6, 6, 2.4, 5.5, 9]
     heapSort(lst)
     for v in lst:
         print(str(v) + " ", end = " ")
