@@ -45,3 +45,17 @@ class EightQueens:
         return True # No conflict
     
 EightQueens() # Create GUI
+
+'''
+self check:
+Given the list queens as in LiveExample 15.10, 
+write the code that assigns True to bool variable 
+hasAQueen if there is a queen at the upper-left diagonal
+at [row, column]. 
+
+hasAQueen = False 
+for i in range(1, row + 1): 
+    if queens[row - i] == column + i: 
+        hasAQueen = True 
+        break
+'''
