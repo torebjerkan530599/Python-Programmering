@@ -1,4 +1,5 @@
 # NB:Order is not managed or maintained in sets!!
+# set operator precedence: -(difference) &(intersection) ^(xor) |(union)
 student1 = {"gabriel", "ashley", "tim"}
 student2 = {"gabriel", "emilia", "tim"}
 print(student1.issuperset({"ashley"})) # True
