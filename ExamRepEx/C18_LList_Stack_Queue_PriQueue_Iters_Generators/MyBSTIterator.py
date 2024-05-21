@@ -1,8 +1,8 @@
-from MyBST import MyBST
+from BST import BST
 
-class MyBST(MyBST):
+class MyBST(BST):
     def __init__(self):
-       MyBST.__init__(self)
+       BST.__init__(self)
         
     # Return an iterator for a BST
     def __iter__(self):
