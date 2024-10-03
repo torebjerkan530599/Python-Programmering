@@ -1,4 +1,4 @@
-class MyBST:
+class BST:
     def __init__(self):
         self.root = None
         self.size = 0
