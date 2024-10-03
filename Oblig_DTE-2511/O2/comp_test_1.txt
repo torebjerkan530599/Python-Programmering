@@ -1,2 +1,0 @@
-return True while yield 
-and False not

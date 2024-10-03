@@ -1,2 +1,0 @@
- return True while yield global if import 
- i is lambda
