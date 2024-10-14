@@ -1,5 +1,5 @@
 
-from MyClock import Clock
+from my_clock import Clock
 import unittest
 
 class Test_Clock(unittest.TestCase):
@@ -69,21 +69,6 @@ class Test_Clock(unittest.TestCase):
     self.__clock = Clock(2000, 2, 28, 23, 59, 00)
     self.__clock.inc_min()
     self.assertEqual(str(self.__clock), "2000-02-29 00:00:00")
-
-#   def main(self):
-#     self.setUp()
-#     self.test_set_clock_illegal_values()
-#     self.test_set_clock_from_default_values()
-#     self.test_set_clock_from_midnight_jan()
-#     self.test_set_clock_from_feb_to_feb_leap_year_2021()
-#     self.test_set_clock_from_feb_to_mar_not_leap_year()
-#     self.test_set_clock_from_2000_to_2001()
-#     self.test_inc_days_not_leap_year()
-#     self.test_inc_days_leap_year()
-#     self.test_inc_year_from_default_values()
-#     self.test_inc_day_middle_of_august()
-#     self.test_inc_sec_from_feb_to_feb_leap_year_2000()
-#     self.test_inc_min_from_feb_to_feb_leap_year()
 
 
 if __name__ == '__main__':
